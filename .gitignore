@@ -1,3 +1,4 @@
 .idea
 ejb/target
 ear/target
+web/target
