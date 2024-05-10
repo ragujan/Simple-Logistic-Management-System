@@ -6,20 +6,24 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Order {
+@Table(name = "orders")
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "merchant_id", referencedColumnName = "id")
+//    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn(name = "merchant_id")
     private Merchant merchantId;
 
+//    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id")
+    @JoinColumn(name = "product_id")
     private Product productId;
 
+    @Column(name = "qty")
     private Integer qty;
 
     @Column(name = "created_at")
@@ -27,9 +31,9 @@ public class Order {
 
     // Constructors, getters, and setters
     // Constructors
-    public Order() {}
+    public Orders() {}
 
-    public Order(Merchant merchantId, Product productId, Integer qty, LocalDateTime createdAt) {
+    public Orders(Merchant merchantId, Product productId, Integer qty, LocalDateTime createdAt) {
         this.merchantId = merchantId;
         this.productId = productId;
         this.qty = qty;
@@ -37,11 +41,11 @@ public class Order {
     }
 
     // Getters and setters
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
