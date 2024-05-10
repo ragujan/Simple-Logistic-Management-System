@@ -1,0 +1,8 @@
+com\jiat\web\servlet\UserServlet.class
+com\jiat\web\servlet\TransferServlet.class
+com\jiat\web\servlet\ScheduleServlet.class
+com\jiat\web\servlet\RegisterServlet.class
+com\jiat\web\servlet\RegisterMerchantServlet.class
+com\jiat\web\servlet\Test2Servlet.class
+com\jiat\web\servlet\LogoutServlet.class
+com\jiat\web\servlet\LoginServlet.class
