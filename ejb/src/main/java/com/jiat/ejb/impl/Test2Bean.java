@@ -1,6 +1,7 @@
 package com.jiat.ejb.impl;
 
 import com.jiat.ejb.entity.Merchant;
+import com.jiat.ejb.entity.Product;
 import com.jiat.ejb.interceptor.AInterceptor;
 import com.jiat.ejb.interceptor.BInterceptor;
 import com.jiat.ejb.interceptor.TestInterceptor;
@@ -29,9 +30,14 @@ public class Test2Bean implements Test2 {
         try {
             transaction.begin();
             Merchant merchant = new Merchant();
-            merchant.setName("ragbag");
-            merchant.setId(1L);
+            merchant.setName("test 2 test 2");
+
+            Product product = new Product();
+            product.setTitle("new product");
+            product.setWeight("55kg");
+
             em.persist(merchant);
+            em.persist(product);
             transaction.commit();
 
         } catch (Exception e) {
