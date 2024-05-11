@@ -1,7 +1,6 @@
 package com.jiat.web.servlet.merchant;
 
 import com.jiat.ejb.remote.ProductService;
-import com.jiat.ejb.remote.RegisterMerchant;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBAccessException;
 import jakarta.servlet.RequestDispatcher;
@@ -33,9 +32,9 @@ public class ProductServiceServlet extends HttpServlet {
             boolean success = productService.registerProduct(title, weight, units);
 
             if (success) {
-                response.sendRedirect("success_page/product_register.jsp");
+                response.sendRedirect("success_page/product-register.jsp");
             } else {
-                response.sendRedirect("error_page/product_register.jsp");
+                response.sendRedirect("error_page/product-register.jsp");
             }
         }catch (EJBAccessException e){
             response.sendError(403);

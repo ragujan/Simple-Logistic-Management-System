@@ -1,29 +1,28 @@
 package com.jiat.ejb.impl.merchant;
 
 import com.jiat.ejb.entity.Merchant;
-import com.jiat.ejb.entity.Product;
-import com.jiat.ejb.remote.Register;
-import com.jiat.ejb.remote.RegisterMerchant;
+import com.jiat.ejb.remote.MerchantService;
 import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Status;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class RegisterMerchantImplBean implements RegisterMerchant {
+public class MerchantServiceImplBean implements MerchantService {
 
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
     @Inject
     private UserTransaction transaction;
-    @Override
-//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public boolean register(String name, String email, String password) {
 
+    @Override
+    public boolean register(String name, String email, String password) {
 
 
         try {
@@ -50,4 +49,16 @@ public class RegisterMerchantImplBean implements RegisterMerchant {
 
         return true;
     }
+
+    @Override
+    public boolean login(String name, String password) {
+        TypedQuery<Merchant> query = em.createQuery("SELECT m FROM Merchant m WHERE m.name = :name", Merchant.class);
+        query.setParameter("name", name);
+        Merchant merchant = query.getSingleResult();
+        System.out.println("merchant name is " + merchant.getName());
+
+        return merchant.getPassword().equals(password);
+
+    }
+
 }

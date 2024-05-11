@@ -1,7 +1,6 @@
 package com.jiat.web.servlet.merchant;
 
-import com.jiat.ejb.remote.RegisterMerchant;
-import com.jiat.ejb.remote.UserService;
+import com.jiat.ejb.remote.MerchantService;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBAccessException;
 import jakarta.servlet.RequestDispatcher;
@@ -17,7 +16,7 @@ import java.io.IOException;
 public class RegisterMerchantServlet extends HttpServlet {
 
     @EJB
-    private RegisterMerchant registerMerchant;
+    private MerchantService merchantService;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Dispatch to JSP page
@@ -30,11 +29,11 @@ public class RegisterMerchantServlet extends HttpServlet {
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            boolean reg = registerMerchant.register(name, email, password);
+            boolean reg = merchantService.register(name, email, password);
             if(reg){
-                response.sendRedirect("success_page/merchant_register.jsp");
+                response.sendRedirect("success_page/merchant-register.jsp");
             }else{
-                response.sendRedirect("error_page/merchant_register.jsp");
+                response.sendRedirect("error_page/merchant-register.jsp");
             }
         }catch (EJBAccessException e){
             response.sendError(403);
