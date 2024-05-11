@@ -13,13 +13,24 @@ public class Product {
 
     private String title;
 
-    private String weight;
+    private Float weight;
+
+    public String getMeasurementUnit() {
+        return measurementUnit;
+    }
+
+    public void setMeasurementUnit(String measurementUnit) {
+        this.measurementUnit = measurementUnit;
+    }
+
+    @Column(name = "measurement_unit")
+    private String measurementUnit;
 
     // Constructors, getters, and setters
     // Constructors
     public Product() {}
 
-    public Product(String title, String weight) {
+    public Product(String title, Float weight) {
         this.title = title;
         this.weight = weight;
     }
@@ -41,11 +52,11 @@ public class Product {
         this.title = title;
     }
 
-    public String getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 
