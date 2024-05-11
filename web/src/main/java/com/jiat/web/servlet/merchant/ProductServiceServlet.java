@@ -4,6 +4,7 @@ import com.jiat.ejb.remote.ProductService;
 import com.jiat.ejb.remote.RegisterMerchant;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBAccessException;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +18,12 @@ public class ProductServiceServlet extends HttpServlet {
 
     @EJB
     private ProductService productService;
-
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Dispatch to JSP page
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/merchant/register-product.jsp");
+        dispatcher.forward(request, response);
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -27,9 +33,9 @@ public class ProductServiceServlet extends HttpServlet {
             boolean success = productService.registerProduct(title, weight, units);
 
             if (success) {
-                response.sendRedirect("success_page/product_success.jsp");
+                response.sendRedirect("success_page/product_register.jsp");
             } else {
-                response.sendRedirect("errors/product_error.jsp");
+                response.sendRedirect("error_page/product_register.jsp");
             }
         }catch (EJBAccessException e){
             response.sendError(403);

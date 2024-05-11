@@ -21,7 +21,7 @@ public class RegisterMerchantServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Dispatch to JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/merchant/register-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/merchant/register-merchant.jsp");
         dispatcher.forward(request, response);
     }
     @Override
@@ -32,7 +32,9 @@ public class RegisterMerchantServlet extends HttpServlet {
             String password = request.getParameter("password");
             boolean reg = registerMerchant.register(name, email, password);
             if(reg){
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("success_page/merchant_register.jsp");
+            }else{
+                response.sendRedirect("error_page/merchant_register.jsp");
             }
         }catch (EJBAccessException e){
             response.sendError(403);

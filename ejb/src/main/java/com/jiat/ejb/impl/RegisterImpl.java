@@ -21,11 +21,11 @@ public class RegisterImpl implements Register {
 
 
 
-        Merchant merchant = new Merchant();
-        merchant.setName(name);
-        merchant.setId(1L);
-
-        em.persist(merchant);
+//        Merchant merchant = new Merchant();
+//        merchant.setName(name);
+//        merchant.setId(1L);
+//
+//        em.persist(merchant);
 
         return false;
     }
