@@ -12,13 +12,14 @@
 </head>
 <%
     if (session.getAttribute("login") == null) {
-        response.sendRedirect("/web/login-merchant");
+//        response.sendRedirect("/web/login-merchant");
+        session.setAttribute("name", "Test");
     }
 %>
 <body>
 <h1>Merchant Home</h1>
 <h1>Hello, ${sessionScope.name}</h1>
 <a href="register-product.jsp">Register Product</a>
-<a href="make-order.jsp">Make Order</a>
+<a href="/web/make-order">Make Order</a>
 </body>
 </html>

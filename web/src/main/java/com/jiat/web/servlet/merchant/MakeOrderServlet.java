@@ -1,9 +1,9 @@
 package com.jiat.web.servlet.merchant;
 
 import com.jiat.ejb.entity.Product;
+import com.jiat.ejb.remote.OrderService;
 import com.jiat.ejb.remote.ProductService;
 import jakarta.ejb.EJB;
-import jakarta.ejb.EJBAccessException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,10 +15,13 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/make-order")
-public class ProductRetrieveServlet extends HttpServlet {
+public class MakeOrderServlet extends HttpServlet {
 
     @EJB
     private ProductService productService;
+
+    @EJB
+    private OrderService orderService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,5 +45,32 @@ public class ProductRetrieveServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String qty = request.getParameter("qty");
+        String product = request.getParameter("product");
+
+        System.out.println("product name is " + product);
+
+        // Dispatch to JSP page
+        if (request.getSession().getAttribute("name") == null) {
+            return;
+        }
+        String merchantName = request.getSession().getAttribute("name").toString();
+        if (productService.getProductsByProductName(product) != null) {
+            System.out.println("not null");
+            Product productEntity = productService.getProductsByProductName(product);
+
+            System.out.println("product weight is " + productEntity.getWeight());
+            boolean status = orderService.createOrder(merchantName, product, qty);
+            if(status){
+                request.setAttribute("success_message", "Order is made success");
+                response.sendRedirect("success_page/common_page.jsp");
+            }else{
+
+            }
+        }
+    }
 
 }

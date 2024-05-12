@@ -1,6 +1,7 @@
 package com.jiat.ejb.impl.merchant;
 
 import com.jiat.ejb.entity.Merchant;
+import com.jiat.ejb.entity.Product;
 import com.jiat.ejb.remote.MerchantService;
 import jakarta.ejb.*;
 import jakarta.inject.Inject;
@@ -58,6 +59,15 @@ public class MerchantServiceBean implements MerchantService {
 
         return merchant.getPassword().equals(password);
 
+    }
+
+    @Override
+    public Merchant getMerchantByName(String name) {
+        TypedQuery<Merchant> query = em.createQuery(
+                "SELECT p FROM Merchant p WHERE p.name = :name",
+                Merchant.class);
+        query.setParameter("name", name);
+        return query.getSingleResult();
     }
 
 }

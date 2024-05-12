@@ -15,14 +15,14 @@
     }
 
 %>
-<form action="/web/make-order" method="post">
+<form action="make-order" method="post">
 
     <label for="qty">QTY:</label>
     <input type="text" id="qty" name="qty"><br><br>
 
-    <select id="products" name="products">
+    <select id="product" name="product">
         <c:forEach items="${productList}" var="product">
-            <option value="${product.id}">${product.title}</option>
+            <option value="${product.title}">${product.title}</option>
         </c:forEach>
     </select>
 

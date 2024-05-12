@@ -8,4 +8,6 @@ public interface ProductService {
     public boolean registerProduct(String title, Float weight, String units, String merchantName);
 
     public List<Product> getProductsByMerchantName(String merchantName);
+
+    Product getProductsByProductName(String merchantName);
 }
