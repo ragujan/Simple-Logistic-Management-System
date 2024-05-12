@@ -12,5 +12,7 @@
 </head>
 <body>
 <h2>Product registered successfully!</h2>
+<br>
+<a href="/web/merchant/merchant-home.jsp">Home Page</a>
 </body>
 </html>

@@ -10,7 +10,15 @@
 <head>
     <title>Merchant Home</title>
 </head>
+<%
+    if (session.getAttribute("login") == null) {
+        response.sendRedirect("/web/login-merchant");
+    }
+%>
 <body>
- <h1>Merchant Home</h1>
+<h1>Merchant Home</h1>
+<h1>Hello, ${sessionScope.name}</h1>
+<a href="register-product.jsp">Register Product</a>
+<a href="make-order.jsp">Make Order</a>
 </body>
 </html>

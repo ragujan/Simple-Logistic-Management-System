@@ -48,7 +48,6 @@ public class Test2Bean implements Test2 {
             orders.setId(11L);
             orders.setCreatedAt(LocalDateTime.parse(formattedDateTime, formatter));
             orders.setQty(5);
-            orders.setMerchantId(merchant);
             orders.setProductId(product);
 
             System.out.println("order product is "+ orders.getProductId().getTitle());

@@ -13,10 +13,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-//    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    @JoinColumn(name = "merchant_id")
-    private Merchant merchantId;
+
 
 //    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @ManyToOne
@@ -33,8 +30,7 @@ public class Orders {
     // Constructors
     public Orders() {}
 
-    public Orders(Merchant merchantId, Product productId, Integer qty, LocalDateTime createdAt) {
-        this.merchantId = merchantId;
+    public Orders( Product productId, Integer qty, LocalDateTime createdAt) {
         this.productId = productId;
         this.qty = qty;
         this.createdAt = createdAt;
@@ -49,13 +45,7 @@ public class Orders {
         this.id = id;
     }
 
-    public Merchant getMerchantId() {
-        return merchantId;
-    }
 
-    public void setMerchantId(Merchant merchantId) {
-        this.merchantId = merchantId;
-    }
 
     public Product getProductId() {
         return productId;
@@ -86,7 +76,6 @@ public class Orders {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", merchant=" + merchantId +
                 ", productId=" + productId +
                 ", qty=" + qty +
                 ", createdAt=" + createdAt +

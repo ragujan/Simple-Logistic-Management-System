@@ -17,26 +17,32 @@ public class ProductServiceServlet extends HttpServlet {
 
     @EJB
     private ProductService productService;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Dispatch to JSP page
         RequestDispatcher dispatcher = request.getRequestDispatcher("/merchant/register-product.jsp");
         dispatcher.forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String title = request.getParameter("title");
             Float weight = Float.parseFloat(request.getParameter("weight"));
             String units = request.getParameter("units");
-            boolean success = productService.registerProduct(title, weight, units);
-
-            if (success) {
-                response.sendRedirect("success_page/product-register.jsp");
-            } else {
-                response.sendRedirect("error_page/product-register.jsp");
+            if (request.getSession().getAttribute("name") != null) {
+                String merchantName = request.getSession().getAttribute("name").toString();
+                boolean success = productService.registerProduct(title, weight, units,merchantName);
+                if (success) {
+                    response.sendRedirect("success_page/product-register.jsp");
+                } else {
+                    response.sendRedirect("error_page/product-register.jsp");
+                }
             }
-        }catch (EJBAccessException e){
+
+
+        } catch (EJBAccessException e) {
             response.sendError(403);
         }
     }

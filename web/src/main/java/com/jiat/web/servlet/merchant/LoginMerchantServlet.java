@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -35,6 +36,10 @@ public class LoginMerchantServlet extends HttpServlet {
             boolean login = merchantService.login(name,password);
 //            boolean reg = merchantService.register(name, email, password);
             if(login){
+//                request.login("merchant","merchant");
+                HttpSession session = request.getSession();
+                session.setAttribute("login", true);
+                session.setAttribute("name",name);
                 response.sendRedirect("merchant/merchant-home.jsp");
             }else{
                 response.sendRedirect("error_page/merchant-login.jsp");

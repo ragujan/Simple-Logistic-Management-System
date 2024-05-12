@@ -10,12 +10,19 @@
 <head>
     <title>Merchant Login</title>
 </head>
+<%
+
+    if (session.getAttribute("login") != null) {
+//        response.sendRedirect("merchant-login.jsp");
+        response.sendRedirect("/web/merchant/merchant-home.jsp");
+    }
+%>
 <body>
  <h1>Merchant Login</h1>
  <form action="login-merchant" method="post">
      <table>
          <tr>
-             <th>Username</th>
+             <th>name</th>
              <td>
                  <input type="text" name="name">
              </td>

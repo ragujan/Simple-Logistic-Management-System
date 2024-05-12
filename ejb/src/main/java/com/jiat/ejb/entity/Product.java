@@ -15,16 +15,30 @@ public class Product {
 
     private Float weight;
 
+    @ManyToOne
+//    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn(name = "merchant_id")
+    private Merchant merchantId;
+    @Column(name = "measurement_unit")
+    private String measurementUnit;
+
+
     public String getMeasurementUnit() {
         return measurementUnit;
+    }
+    public Merchant getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Merchant merchantId) {
+        this.merchantId = merchantId;
     }
 
     public void setMeasurementUnit(String measurementUnit) {
         this.measurementUnit = measurementUnit;
     }
 
-    @Column(name = "measurement_unit")
-    private String measurementUnit;
+
 
     // Constructors, getters, and setters
     // Constructors

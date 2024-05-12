@@ -1,26 +1,21 @@
 package com.jiat.ejb.impl.merchant;
 
 import com.jiat.ejb.entity.Merchant;
-import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.entity.Product;
 import com.jiat.ejb.remote.ProductService;
-import com.jiat.ejb.remote.Test2;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.SystemException;
-import jakarta.transaction.UserTransaction;
+import jakarta.persistence.TypedQuery;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Stateless
 //@TransactionManagement(TransactionManagementType.BEAN)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ProductBean implements ProductService {
+public class ProductServiceBean implements ProductService {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
@@ -57,15 +52,19 @@ public class ProductBean implements ProductService {
 //    }
 
     @Override
-    public boolean registerProduct(String title, Float weight, String units) {
+    public boolean registerProduct(String title, Float weight, String units, String merchantName) {
 
 
         try {
+            TypedQuery<Merchant> query = em.createQuery("SELECT m FROM Merchant m WHERE m.name = :name", Merchant.class);
+            query.setParameter("name", merchantName);
+            Merchant merchant = query.getSingleResult();
 
             Product product = new Product();
             product.setTitle(title);
             product.setWeight(weight);
             product.setMeasurementUnit(units);
+            product.setMerchantId(merchant);
 
             em.persist(product);
 
@@ -76,6 +75,15 @@ public class ProductBean implements ProductService {
 
 
         return true;
+    }
+
+    @Override
+    public List<Product> getProductsByMerchantName(String merchantName) {
+        TypedQuery<Product> query = em.createQuery(
+                "SELECT p FROM Product p WHERE p.merchantId.name = :merchantName",
+                Product.class);
+        query.setParameter("merchantName", merchantName);
+        return query.getResultList();
     }
 
 

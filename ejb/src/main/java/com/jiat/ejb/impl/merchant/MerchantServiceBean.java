@@ -7,13 +7,12 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Status;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class MerchantServiceImplBean implements MerchantService {
+public class MerchantServiceBean implements MerchantService {
 
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
