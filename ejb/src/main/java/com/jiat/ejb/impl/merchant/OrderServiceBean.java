@@ -16,7 +16,7 @@ import jakarta.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+//Container managed transaction
 @Stateless
 //@TransactionManagement(TransactionManagementType.BEAN)
 @TransactionManagement(TransactionManagementType.CONTAINER)

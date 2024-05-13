@@ -11,6 +11,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
 
+//Bean managed transaction
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class MerchantServiceBean implements MerchantService {

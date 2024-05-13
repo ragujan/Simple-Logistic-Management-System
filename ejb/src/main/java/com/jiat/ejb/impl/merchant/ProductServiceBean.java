@@ -12,6 +12,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
+//Container managed transaction
 @Stateless
 //@TransactionManagement(TransactionManagementType.BEAN)
 @TransactionManagement(TransactionManagementType.CONTAINER)
