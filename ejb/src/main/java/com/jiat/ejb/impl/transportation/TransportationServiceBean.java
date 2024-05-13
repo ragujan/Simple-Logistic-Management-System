@@ -3,6 +3,7 @@ package com.jiat.ejb.impl.transportation;
 import com.jiat.ejb.entity.Transportation;
 import com.jiat.ejb.entity.TransportationType;
 import com.jiat.ejb.remote.TransportationService;
+import jakarta.ejb.Stateful;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -11,10 +12,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.UserTransaction;
 
+import java.util.List;
 import java.util.Optional;
 
 //Bean managed transaction
 @Stateless
+//@Stateful
 @TransactionManagement(TransactionManagementType.BEAN)
 public class TransportationServiceBean implements TransportationService {
 
@@ -75,6 +78,13 @@ public class TransportationServiceBean implements TransportationService {
             return false;
         }
     }
+
+    @Override
+    public List<TransportationType> getAllTransportationTypes() {
+        return em.createQuery("SELECT tt FROM TransportationType tt", TransportationType.class)
+                .getResultList();
+    }
+
     private Optional<TransportationType> findTransportationTypeByName(String name) {
         return em.createQuery("SELECT tt FROM TransportationType tt WHERE tt.name = :name", TransportationType.class)
                 .setParameter("name", name)

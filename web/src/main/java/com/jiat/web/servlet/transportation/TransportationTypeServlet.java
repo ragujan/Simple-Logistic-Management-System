@@ -35,7 +35,9 @@ public class TransportationTypeServlet extends HttpServlet {
             boolean success = transportationService.addTransportationType(name);
 
             if (success) {
-                response.getWriter().write("TransportationType successfully added.");
+                request.setAttribute("success_message","transportation type is added");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("success_page/common_page.jsp");
+                dispatcher.forward(request, response);
             } else {
                 response.getWriter().write("Failed to add TransportationType.");
             }

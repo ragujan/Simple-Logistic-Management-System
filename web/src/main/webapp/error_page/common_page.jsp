@@ -15,9 +15,9 @@
 <%--    String successMessage = request.getAttribute("success_message").toString();--%>
 <%--%>--%>
 <body>
-<h1>Success</h1>
+<h1>Error</h1>
 
-<h1><c:out value="${success_message}"/></h1>
+<h1><c:out value="${error_message}"/></h1>
 <a href="#" onclick="history.back(); return false;">Go back</a>
 
 </body>
