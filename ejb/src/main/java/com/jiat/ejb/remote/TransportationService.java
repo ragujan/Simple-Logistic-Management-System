@@ -1,5 +1,6 @@
 package com.jiat.ejb.remote;
 
+import com.jiat.ejb.entity.Transportation;
 import com.jiat.ejb.entity.TransportationType;
 import jakarta.ejb.Remote;
 
@@ -12,6 +13,7 @@ public interface TransportationService {
 
 //    public List<TransportationType> getTransportationTypeByName(String name);
 
+    public List<Transportation> getAllTransportations();
     public List<TransportationType> getAllTransportationTypes();
 
 

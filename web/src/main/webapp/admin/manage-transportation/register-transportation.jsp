@@ -26,5 +26,28 @@
     </select><br><br>
     <input type="submit" value="Add Transportation">
 </form>
+
+<h2>All Transportations</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Maximum Weight</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="transportation" items="${transportations}">
+        <tr>
+            <td>${transportation.id}</td>
+            <td>${transportation.type}</td>
+            <td>${transportation.name}</td>
+            <td>${transportation.maximumWeight}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+
 </body>
 </html>

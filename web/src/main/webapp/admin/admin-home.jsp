@@ -11,6 +11,12 @@
     <title>Title</title>
 </head>
 <body>
-
+<h1>Admin Tasks</h1>
+<a href="register-transportation">Register Transportation</a>
+<br>
+<a href="register-transportation-type">Register Transportation Type</a>
+<br>
+<a href="add-route">Add Routes</a>
+<br>
 </body>
 </html>

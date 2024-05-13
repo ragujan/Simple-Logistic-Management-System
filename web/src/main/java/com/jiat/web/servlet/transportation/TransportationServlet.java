@@ -1,5 +1,7 @@
 package com.jiat.web.servlet.transportation;
 
+import com.jiat.core.models.TransportationDataModel;
+import com.jiat.ejb.entity.Transportation;
 import com.jiat.ejb.entity.TransportationType;
 import com.jiat.ejb.remote.TransportationService;
 import jakarta.ejb.EJB;
@@ -11,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/register-transportation")
@@ -23,7 +26,15 @@ public class TransportationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Dispatch to JSP page
         List<TransportationType> transportationTypeList = transportationService.getAllTransportationTypes();
+        List<Transportation> transportations  = transportationService.getAllTransportations();
+        List<TransportationDataModel> transportationDataModels = new ArrayList<>();
+
+        for (Transportation transportation: transportations
+             ) {
+           transportationDataModels.add(new TransportationDataModel(transportation.getId(),transportation.getTransportationType().getName(),transportation.getName(),transportation.getMaximumWeight()));
+        }
         request.setAttribute("transportationTypeList",transportationTypeList);
+        request.setAttribute("transportations", transportationDataModels);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/manage-transportation/register-transportation.jsp");
         dispatcher.forward(request, response);
 

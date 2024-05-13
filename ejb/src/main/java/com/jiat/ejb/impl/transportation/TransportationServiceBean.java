@@ -26,6 +26,7 @@ public class TransportationServiceBean implements TransportationService {
 
     @Inject
     private UserTransaction transaction;
+
     @Override
     public boolean addTransportationType(String name) {
         try {
@@ -78,6 +79,12 @@ public class TransportationServiceBean implements TransportationService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<Transportation> getAllTransportations() {
+        return em.createQuery("SELECT t FROM Transportation t", Transportation.class)
+                .getResultList();
     }
 
     @Override

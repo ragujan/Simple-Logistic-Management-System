@@ -39,6 +39,12 @@
             <type>ejb-client</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.ragbcd_02</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

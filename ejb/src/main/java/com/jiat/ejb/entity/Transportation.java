@@ -3,8 +3,10 @@ package com.jiat.ejb.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
-public class Transportation {
+public class Transportation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
