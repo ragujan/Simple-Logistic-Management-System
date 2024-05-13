@@ -2,7 +2,6 @@ package com.jiat.ejb.entity;
 
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 public class Transportation {
@@ -15,6 +14,16 @@ public class Transportation {
     @JoinColumn(name = "transportation_type_id", referencedColumnName = "id")
     private TransportationType transportationType;
 
+    public Float getMaximumWeight() {
+        return maximumWeight;
+    }
+
+    public void setMaximumWeight(Float maximumWeight) {
+        this.maximumWeight = maximumWeight;
+    }
+
+    @Column(name = "maximum_weight")
+    private Float maximumWeight;
     private String name;
 
     // Constructors, getters, and setters

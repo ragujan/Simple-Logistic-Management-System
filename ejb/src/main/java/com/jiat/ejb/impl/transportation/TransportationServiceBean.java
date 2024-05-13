@@ -46,7 +46,7 @@ public class TransportationServiceBean implements TransportationService {
     }
 
     @Override
-    public boolean addTransportation(String name, String transportationTypeName) {
+    public boolean addTransportation(String name, String transportationTypeName, Float maximumWeight) {
         try {
             // Find the TransportationType by name
             Optional<TransportationType> optionalTransportationType = findTransportationTypeByName(transportationTypeName);
@@ -61,6 +61,7 @@ public class TransportationServiceBean implements TransportationService {
                 Transportation transportation = new Transportation();
                 transportation.setName(name);
                 transportation.setTransportationType(transportationType);
+                transportation.setMaximumWeight(maximumWeight);
 
                 // Persist the Transportation
                 em.persist(transportation);

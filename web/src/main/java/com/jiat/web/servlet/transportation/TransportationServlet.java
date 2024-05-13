@@ -33,9 +33,10 @@ public class TransportationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IOException {
         String name = request.getParameter("name");
         String transportationTypeName = request.getParameter("transportationType");
+        String maximumWeight = request.getParameter("maximumWeight");
 
         if (name != null && !name.isEmpty() && transportationTypeName != null && !transportationTypeName.isEmpty()) {
-            boolean success = transportationService.addTransportation(name, transportationTypeName);
+            boolean success = transportationService.addTransportation(name, transportationTypeName,Float.parseFloat(maximumWeight));
 
             if (success) {
                 request.setAttribute("success_message","transportation is added");

@@ -16,6 +16,8 @@
 <form action="register-transportation" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required><br><br>
+    <label for="name">Maximum Weight:</label>
+    <input type="text" id="maximumWeight" name="maximumWeight" required><br><br>
     <label for="transportationType">Transportation Type:</label>
     <select id="transportationType" name="transportationType" required>
         <c:forEach var="type" items="${transportationTypeList}">

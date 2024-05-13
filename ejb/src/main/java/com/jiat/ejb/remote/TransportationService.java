@@ -8,7 +8,7 @@ import java.util.List;
 @Remote
 public interface TransportationService {
     public boolean addTransportationType(String name);
-    public boolean addTransportation(String name, String transportationType);
+    public boolean addTransportation(String name, String transportationType,Float maximumWeight);
 
 //    public List<TransportationType> getTransportationTypeByName(String name);
 
