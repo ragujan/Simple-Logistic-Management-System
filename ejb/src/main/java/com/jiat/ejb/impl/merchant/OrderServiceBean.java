@@ -5,10 +5,7 @@ import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.entity.Product;
 import com.jiat.ejb.remote.OrderService;
 import com.jiat.ejb.remote.ProductService;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionManagement;
-import jakarta.ejb.TransactionManagementType;
+import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -16,6 +13,7 @@ import jakarta.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 //Container managed transaction
 @Stateless
 //@TransactionManagement(TransactionManagementType.BEAN)
@@ -23,8 +21,6 @@ import java.util.List;
 public class OrderServiceBean implements OrderService {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
-
-
 
 
     @EJB
@@ -74,19 +70,29 @@ public class OrderServiceBean implements OrderService {
 
 
     @Override
-    public boolean createOrder(String merchantName, String productName, String qty) {
+    public boolean createOrder(String merchantName, String productName, String qty, String expectedDate) {
 
         Product product = productService.getProductsByProductName(productName);
 
-        // Format LocalDateTime to the specified pattern
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = LocalDateTime.now().format(formatter);
+//      Defining the formatter for the original data-time format, which received from the user end as a local date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+//      Parse the original date into a LocalDateTime
+        LocalDateTime originalDateTime = LocalDateTime.parse(expectedDate, formatter);
+//      defining the desired formatter
+        DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        format the localdatetime object to the desired formatter. now it will be string verion of the sql datetime.
+        String formattedDateTimeString = originalDateTime.format(desiredFormatter);
 
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime formattedExpectedDate = LocalDateTime.parse(formattedDateTimeString, formatter);
+        String formattedDateTime = LocalDateTime.now().format(formatter);
+        LocalDateTime createdAt = LocalDateTime.parse(formattedDateTime, formatter);
         try {
             Orders orders = new Orders();
             orders.setQty(Integer.parseInt(qty));
-            orders.setCreatedAt(LocalDateTime.parse(formattedDateTime,formatter));
+            orders.setCreatedAt(createdAt);
             orders.setProductId(product);
+            orders.setExpectedDate(formattedExpectedDate);
 
             em.persist(orders);
             return true;

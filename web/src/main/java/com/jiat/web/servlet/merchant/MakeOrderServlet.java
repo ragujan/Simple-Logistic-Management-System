@@ -50,6 +50,7 @@ public class MakeOrderServlet extends HttpServlet {
 
         String qty = request.getParameter("qty");
         String product = request.getParameter("product");
+        String expectedDate = request.getParameter("expectedDate");
 
         System.out.println("product name is " + product);
 
@@ -63,11 +64,16 @@ public class MakeOrderServlet extends HttpServlet {
             Product productEntity = productService.getProductsByProductName(product);
 
             System.out.println("product weight is " + productEntity.getWeight());
-            boolean status = orderService.createOrder(merchantName, product, qty);
-            if(status){
+            boolean status = orderService.createOrder(merchantName, product, qty, expectedDate);
+            if (status) {
                 request.setAttribute("success_message", "Order is made success");
-                response.sendRedirect("success_page/common_page.jsp");
-            }else{
+                RequestDispatcher dispatcher = request.getRequestDispatcher("success_page/common_page.jsp");
+                dispatcher.forward(request, response);
+
+            } else {
+                request.setAttribute("error_message", "couldn't make the order, try again maybe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("error_page/common_page.jsp");
+                dispatcher.forward(request, response);
 
             }
         }

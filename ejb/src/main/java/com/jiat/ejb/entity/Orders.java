@@ -14,7 +14,6 @@ public class Orders {
     private Long id;
 
 
-
 //    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -25,6 +24,17 @@ public class Orders {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public LocalDateTime getExpectedDate() {
+        return expectedDate;
+    }
+
+    public void setExpectedDate(LocalDateTime expectedDate) {
+        this.expectedDate = expectedDate;
+    }
+
+    @Column(name = "expected_date")
+    private LocalDateTime expectedDate;
 
     // Constructors, getters, and setters
     // Constructors

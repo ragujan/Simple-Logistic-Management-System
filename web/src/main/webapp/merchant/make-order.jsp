@@ -9,9 +9,9 @@
 <body>
 <h2>Make Order</h2>
 <%
-    List<Product> productList =(List<Product>) request.getAttribute("productList");
-    for (Product product:productList){
-        System.out.println("product from jsp page"+ product.getTitle());
+    List<Product> productList = (List<Product>) request.getAttribute("productList");
+    for (Product product : productList) {
+        System.out.println("product from jsp page" + product.getTitle());
     }
 
 %>
@@ -19,6 +19,9 @@
 
     <label for="qty">QTY:</label>
     <input type="text" id="qty" name="qty"><br><br>
+
+    <label for="expectedDate">Expected Date:</label>
+    <input type="datetime-local" id="expectedDate" name="expectedDate"><br><br>
 
     <select id="product" name="product">
         <c:forEach items="${productList}" var="product">
