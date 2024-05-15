@@ -6,13 +6,14 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "freight")
 public class Freight implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JoinColumn(name = "weight")
     private Integer weight;
 
     @ManyToOne
@@ -29,7 +30,8 @@ public class Freight implements Serializable {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    private String eta;
+    @Column(name = "eta")
+    private Double eta;
 
     @Column(name = "is_delivered")
     private boolean delivered;
@@ -89,11 +91,11 @@ public class Freight implements Serializable {
         this.endDate = endDate;
     }
 
-    public String getEta() {
+    public Double getEta() {
         return eta;
     }
 
-    public void setEta(String eta) {
+    public void setEta(Double eta) {
         this.eta = eta;
     }
 

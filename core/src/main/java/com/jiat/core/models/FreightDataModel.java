@@ -11,12 +11,12 @@ public class FreightDataModel {
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
-    private String eta;
-    private String transportationId;
+    private Double eta;
+    private Integer transportationId;
 
 
 
-    private String routeId;
+    private Integer routeId;
 
 
 
@@ -42,19 +42,19 @@ public class FreightDataModel {
         this.weight = weight;
     }
 
-    public String getTransportationId() {
+    public Integer getTransportationId() {
         return transportationId;
     }
 
-    public void setTransportationId(String transportationId) {
+    public void setTransportationId(Integer transportationId) {
         this.transportationId = transportationId;
     }
 
-    public String getRouteId() {
+    public Integer getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(String routeId) {
+    public void setRouteId(Integer routeId) {
         this.routeId = routeId;
     }
 
@@ -74,11 +74,11 @@ public class FreightDataModel {
         this.endDate = endDate;
     }
 
-    public String getEta() {
+    public Double getEta() {
         return eta;
     }
 
-    public void setEta(String eta) {
+    public void setEta(Double eta) {
         this.eta = eta;
     }
 

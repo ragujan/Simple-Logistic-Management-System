@@ -1,5 +1,6 @@
 package com.jiat.web.servlet.freight;
 
+import com.jiat.core.models.FreightDataModel;
 import com.jiat.core.models.TransportationDataModel;
 import com.jiat.ejb.entity.Route;
 import com.jiat.ejb.entity.Transportation;
@@ -13,8 +14,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import util.DateFormatterUtil;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +54,27 @@ public class FreightRegistrationServlet extends HttpServlet {
         System.out.println("End Date: " + endDate);
         System.out.println("ETA: " + eta);
 
+        LocalDateTime formattedStartDate = DateFormatterUtil.format(startDate);
+        LocalDateTime formattedEndDate = DateFormatterUtil.format(endDate);
+
+        FreightDataModel freightDataModel = new FreightDataModel();
+        freightDataModel.setEta(Double.parseDouble(eta));
+        freightDataModel.setStartDate(formattedStartDate);
+        freightDataModel.setEndDate(formattedEndDate);
+        freightDataModel.setTransportationId(Integer.parseInt(transportationId));
+        freightDataModel.setWeight(weight);
+        freightDataModel.setRouteId(Integer.parseInt(routeId));
+        boolean insertionSuccess = freightService.addFreight(freightDataModel);
+
+        if(insertionSuccess){
+            request.setAttribute("success_message", "Freight successfully registered");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("success_page/common_page.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            request.setAttribute("error_message", "Failed to add Freight. Please try again.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error_page/common_page.jsp");
+            dispatcher.forward(request, response);
+        }
 
 
     }
