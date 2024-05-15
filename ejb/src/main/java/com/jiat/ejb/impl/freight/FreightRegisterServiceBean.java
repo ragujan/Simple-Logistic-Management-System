@@ -2,10 +2,9 @@ package com.jiat.ejb.impl.freight;
 
 import com.jiat.core.models.FreightDataModel;
 import com.jiat.ejb.entity.Freight;
-import com.jiat.ejb.entity.Merchant;
 import com.jiat.ejb.entity.Route;
 import com.jiat.ejb.entity.Transportation;
-import com.jiat.ejb.remote.FreightService;
+import com.jiat.ejb.remote.FreightRegisterService;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class FreightServiceBean implements FreightService {
+public class FreightRegisterServiceBean implements FreightRegisterService {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
@@ -54,7 +53,7 @@ public class FreightServiceBean implements FreightService {
             freight.setEndDate(model.getEndDate());
             freight.setRoute(route.getSingleResult());
             freight.setWeight(Integer.parseInt(model.getWeight()));
-
+            freight.setHasStarted(false);
             em.persist(freight);
 
 
@@ -73,6 +72,13 @@ public class FreightServiceBean implements FreightService {
         }
 
     }
+
+    @Override
+    public List<Freight> getAllFreights() {
+        return em.createQuery("SELECT tt FROM Freight tt", Freight.class)
+                .getResultList();
+    }
+
     @Override
     public List<Route> getAllRoutes() {
         return em.createQuery("SELECT tt FROM Route tt", Route.class)

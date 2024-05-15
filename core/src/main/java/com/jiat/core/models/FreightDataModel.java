@@ -13,17 +13,46 @@ public class FreightDataModel {
     private LocalDateTime endDate;
     private Double eta;
     private Integer transportationId;
-
-
-
+    private String transportationName;
     private Integer routeId;
+    private String routeName;
+    private String delivered;
+    private String hasJourneyStarted;
+
+    public String getHasJourneyStarted() {
+        return hasJourneyStarted;
+    }
+
+    public void setHasJourneyStarted(String hasJourneyStarted) {
+        this.hasJourneyStarted = hasJourneyStarted;
+    }
+
+    public String getDelivered() {
+        return delivered;
+    }
+
+    public String getFailed() {
+        return failed;
+    }
+
+    private String failed;
+    public String getTransportationName() {
+        return transportationName;
+    }
+
+    public void setTransportationName(String transportationName) {
+        this.transportationName = transportationName;
+    }
+
+    public String getRouteName() {
+        return routeName;
+    }
+
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
+    }
 
 
-
-
-    private boolean delivered;
-
-    private boolean failed;
 
 
     public Integer getId() {
@@ -82,19 +111,19 @@ public class FreightDataModel {
         this.eta = eta;
     }
 
-    public boolean isDelivered() {
+    public String isDelivered() {
         return delivered;
     }
 
-    public void setDelivered(boolean delivered) {
+    public void setDelivered(String delivered) {
         this.delivered = delivered;
     }
 
-    public boolean isFailed() {
+    public String isFailed() {
         return failed;
     }
 
-    public void setFailed(boolean failed) {
+    public void setFailed(String failed) {
         this.failed = failed;
     }
 }

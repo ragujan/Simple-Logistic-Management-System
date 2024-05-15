@@ -38,9 +38,17 @@ public class Freight implements Serializable {
 
     @Column(name = "is_failed")
     private boolean failed;
+    @Column(name = "has_started")
+    private boolean hasStarted;
 
+    public boolean isHasStarted() {
+        return hasStarted;
+    }
 
-    // Constructors, getters, and setters
+    public void setHasStarted(boolean hasStarted) {
+        this.hasStarted = hasStarted;
+    }
+// Constructors, getters, and setters
 
 
     public Integer getId() {

@@ -38,12 +38,12 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="transportation" items="${transportations}">
+    <c:forEach var="freight" items="${transportations}">
         <tr>
-            <td>${transportation.id}</td>
-            <td>${transportation.type}</td>
-            <td>${transportation.name}</td>
-            <td>${transportation.maximumWeight}</td>
+            <td>${freight.id}</td>
+            <td>${freight.type}</td>
+            <td>${freight.name}</td>
+            <td>${freight.maximumWeight}</td>
         </tr>
     </c:forEach>
     </tbody>

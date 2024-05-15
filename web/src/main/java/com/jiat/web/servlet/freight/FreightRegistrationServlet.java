@@ -1,12 +1,10 @@
 package com.jiat.web.servlet.freight;
 
 import com.jiat.core.models.FreightDataModel;
-import com.jiat.core.models.TransportationDataModel;
+import com.jiat.ejb.entity.Freight;
 import com.jiat.ejb.entity.Route;
 import com.jiat.ejb.entity.Transportation;
-import com.jiat.ejb.entity.TransportationType;
-import com.jiat.ejb.remote.FreightService;
-import com.jiat.ejb.remote.TransportationService;
+import com.jiat.ejb.remote.FreightRegisterService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -25,12 +23,50 @@ import java.util.List;
 public class FreightRegistrationServlet extends HttpServlet {
 
     @EJB
-    private FreightService freightService;
+    private FreightRegisterService freightRegisterService;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Transportation> transportationList = freightService.getAllTransportations();
-        List<Route> routeList = freightService.getAllRoutes();
+        List<Transportation> transportationList = freightRegisterService.getAllTransportations();
+        List<Route> routeList = freightRegisterService.getAllRoutes();
+        List<Freight> freightList = freightRegisterService.getAllFreights();
+        List<FreightDataModel> frightDataModelList = new ArrayList<>();
 
+
+        freightList.forEach(e-> {
+            FreightDataModel freightDataModel = new FreightDataModel();
+            freightDataModel.setRouteId(e.getRoute().getId());
+            freightDataModel.setRouteName(e.getRoute().getName());
+            freightDataModel.setTransportationId(e.getTransportation().getId());
+            freightDataModel.setTransportationName(e.getTransportation().getName());
+            freightDataModel.setRouteId(e.getRoute().getId());
+            freightDataModel.setWeight(Integer.toString(e.getWeight()));
+            freightDataModel.setEta(e.getEta());
+            freightDataModel.setStartDate(e.getStartDate());
+            freightDataModel.setEndDate(e.getEndDate());
+            freightDataModel.setId(e.getId());
+
+            if(e.isFailed()){
+                freightDataModel.setFailed("true");
+            }else{
+                freightDataModel.setFailed("false");
+            }
+
+            if(e.isDelivered()){
+                freightDataModel.setDelivered("true");
+            }else{
+                freightDataModel.setDelivered("false");
+            }
+
+            if(e.isHasStarted()){
+                freightDataModel.setHasJourneyStarted("true");
+            }else{
+                freightDataModel.setHasJourneyStarted("false");
+            }
+
+            frightDataModelList.add(freightDataModel);
+        });
+
+        request.setAttribute("freightList", frightDataModelList);
         request.setAttribute("transportationList", transportationList);
         request.setAttribute("routeList", routeList);
 
@@ -64,7 +100,7 @@ public class FreightRegistrationServlet extends HttpServlet {
         freightDataModel.setTransportationId(Integer.parseInt(transportationId));
         freightDataModel.setWeight(weight);
         freightDataModel.setRouteId(Integer.parseInt(routeId));
-        boolean insertionSuccess = freightService.addFreight(freightDataModel);
+        boolean insertionSuccess = freightRegisterService.addFreight(freightDataModel);
 
         if(insertionSuccess){
             request.setAttribute("success_message", "Freight successfully registered");

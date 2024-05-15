@@ -14,6 +14,6 @@
 <!--            <property name="" value=""/>-->
             <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
-        <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+<!--        <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>-->
     </persistence-unit>
 </persistence>
