@@ -8,17 +8,18 @@ public class FreightDataModel {
 
     private String weight;
 
+    private LocalDateTime startDate;
 
+    private LocalDateTime endDate;
+    private String eta;
     private String transportationId;
+
 
 
     private String routeId;
 
-    private LocalDateTime startDate;
 
-    private LocalDateTime endDate;
 
-    private String eta;
 
     private boolean delivered;
 

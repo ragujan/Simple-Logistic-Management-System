@@ -16,6 +16,8 @@ import jakarta.persistence.TypedQuery;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
 
+import java.util.List;
+
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class FreightServiceBean implements FreightService {
@@ -70,5 +72,16 @@ public class FreightServiceBean implements FreightService {
             return false;
         }
 
+    }
+    @Override
+    public List<Route> getAllRoutes() {
+        return em.createQuery("SELECT tt FROM Route tt", Route.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Transportation> getAllTransportations() {
+        return em.createQuery("SELECT tt FROM Transportation tt", Transportation.class)
+                .getResultList();
     }
 }
