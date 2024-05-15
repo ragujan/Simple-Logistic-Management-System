@@ -4,6 +4,7 @@ package com.jiat.ejb.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 public class Transportation implements Serializable {
@@ -16,16 +17,16 @@ public class Transportation implements Serializable {
     @JoinColumn(name = "transportation_type_id", referencedColumnName = "id")
     private TransportationType transportationType;
 
-    public Float getMaximumWeight() {
+    public Integer getMaximumWeight() {
         return maximumWeight;
     }
 
-    public void setMaximumWeight(Float maximumWeight) {
+    public void setMaximumWeight(Integer maximumWeight) {
         this.maximumWeight = maximumWeight;
     }
 
     @Column(name = "maximum_weight")
-    private Float maximumWeight;
+    private Integer maximumWeight;
     private String name;
 
     // Constructors, getters, and setters

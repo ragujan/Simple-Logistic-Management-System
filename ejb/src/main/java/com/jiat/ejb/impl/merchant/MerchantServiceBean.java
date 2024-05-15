@@ -38,6 +38,7 @@ public class MerchantServiceBean implements MerchantService {
 
             transaction.commit();
 
+            return true;
         } catch (Exception e) {
             try {
                 System.out.println("rollback");
@@ -46,9 +47,9 @@ public class MerchantServiceBean implements MerchantService {
             } catch (SystemException ex) {
                 throw new RuntimeException(ex);
             }
+            return false;
         }
 
-        return true;
     }
 
     @Override

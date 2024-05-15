@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class TransportationServlet extends HttpServlet {
 
         for (Transportation transportation: transportations
              ) {
-           transportationDataModels.add(new TransportationDataModel(transportation.getId(),transportation.getTransportationType().getName(),transportation.getName(),transportation.getMaximumWeight()));
+           transportationDataModels.add(new TransportationDataModel(transportation.getId(),transportation.getTransportationType().getName(),transportation.getName(),Integer.toString(transportation.getMaximumWeight())));
         }
         request.setAttribute("transportationTypeList",transportationTypeList);
         request.setAttribute("transportations", transportationDataModels);
@@ -47,7 +48,7 @@ public class TransportationServlet extends HttpServlet {
         String maximumWeight = request.getParameter("maximumWeight");
 
         if (name != null && !name.isEmpty() && transportationTypeName != null && !transportationTypeName.isEmpty()) {
-            boolean success = transportationService.addTransportation(name, transportationTypeName,Float.parseFloat(maximumWeight));
+            boolean success = transportationService.addTransportation(name, transportationTypeName,Integer.parseInt(maximumWeight));
 
             if (success) {
                 request.setAttribute("success_message","transportation is added");

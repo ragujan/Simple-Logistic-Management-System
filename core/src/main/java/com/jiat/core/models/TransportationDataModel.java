@@ -6,9 +6,9 @@ public class TransportationDataModel implements Serializable {
     private Integer id;
     private String type;
     private String name;
-    private Float maximumWeight;
+    private String maximumWeight;
 
-    public TransportationDataModel(Integer id, String type, String name, Float maximumWeight) {
+    public TransportationDataModel(Integer id, String type, String name, String maximumWeight) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -39,11 +39,11 @@ public class TransportationDataModel implements Serializable {
         this.name = name;
     }
 
-    public Float getMaximumWeight() {
+    public String getMaximumWeight() {
         return maximumWeight;
     }
 
-    public void setMaximumWeight(Float maximumWeight) {
+    public void setMaximumWeight(String maximumWeight) {
         this.maximumWeight = maximumWeight;
     }
 }

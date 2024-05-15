@@ -4,12 +4,13 @@ import com.jiat.ejb.entity.Transportation;
 import com.jiat.ejb.entity.TransportationType;
 import jakarta.ejb.Remote;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Remote
 public interface TransportationService {
     public boolean addTransportationType(String name);
-    public boolean addTransportation(String name, String transportationType,Float maximumWeight);
+    public boolean addTransportation(String name, String transportationType, Integer maximumWeight);
 
 //    public List<TransportationType> getTransportationTypeByName(String name);
 

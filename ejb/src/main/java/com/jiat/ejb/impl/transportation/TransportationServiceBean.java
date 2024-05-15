@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.UserTransaction;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class TransportationServiceBean implements TransportationService {
     }
 
     @Override
-    public boolean addTransportation(String name, String transportationTypeName, Float maximumWeight) {
+    public boolean addTransportation(String name, String transportationTypeName, Integer maximumWeight) {
         try {
             // Find the TransportationType by name
             Optional<TransportationType> optionalTransportationType = findTransportationTypeByName(transportationTypeName);
