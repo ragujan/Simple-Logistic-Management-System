@@ -9,6 +9,7 @@ import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 //Container managed transaction
@@ -41,6 +42,7 @@ public class DestinationServiceBean implements DestinationService {
                         route.setStartingPoint(startingPoint);
                         route.setDestinationPoint(destinationPoint);
                         route.setName(routeName);
+                        route.setRouteOrder(i+1);
                         route.setDestinationId(destination);
                         em.persist(route);
                     });
@@ -51,4 +53,7 @@ public class DestinationServiceBean implements DestinationService {
         }
         return false;
     }
+
+
+
 }

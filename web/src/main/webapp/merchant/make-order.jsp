@@ -28,7 +28,11 @@
             <option value="${product.title}">${product.title}</option>
         </c:forEach>
     </select>
-
+    <select id="destinationId" name="destinationId">
+        <c:forEach items="${destinationList}" var="destination">
+            <option value="${destination.id}">${destination.destinationName}</option>
+        </c:forEach>
+    </select>
 
     <input type="submit" value="Register">
 </form>

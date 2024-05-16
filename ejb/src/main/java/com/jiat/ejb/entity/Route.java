@@ -20,15 +20,26 @@ public class Route {
     @JoinColumn(name = "destination_id")
     private Destination destinationId;
 
+    @Column(name = "route_order")
+    private Integer routeOrder;
     private String name;
 
-    public Route() {}
+    public Route() {
+    }
 
-    public Route(Destination destination,String startingPoint, String destinationPoint, String name) {
+    public Route(Destination destination, String startingPoint, String destinationPoint, String name) {
         this.destinationId = destination;
         this.startingPoint = startingPoint;
         this.destinationPoint = destinationPoint;
         this.name = name;
+    }
+
+    public Integer getRouteOrder() {
+        return routeOrder;
+    }
+
+    public void setRouteOrder(Integer routeOrder) {
+        this.routeOrder = routeOrder;
     }
 
     public Destination getDestinationId() {
