@@ -2,9 +2,11 @@ package com.jiat.ejb.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "route")
-public class Route {
+public class Route implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

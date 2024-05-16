@@ -3,11 +3,12 @@ package com.jiat.ejb.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
-public class Orders {
+public class Orders implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,9 @@ public class Orders {
     @Column(name = "expected_date")
     private LocalDateTime expectedDate;
 
+    @Column(name = "order_status")
+    private String orderStatus;
+
     public LocalDateTime getExpectedDate() {
         return expectedDate;
     }
@@ -50,6 +54,14 @@ public class Orders {
         this.productId = productId;
         this.qty = qty;
         this.createdAt = createdAt;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public Destination getDestination() {

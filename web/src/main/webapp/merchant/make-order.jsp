@@ -5,6 +5,22 @@
 <html>
 <head>
     <title>Make Order</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
 <h2>Make Order</h2>
@@ -36,5 +52,29 @@
 
     <input type="submit" value="Register">
 </form>
+
+<h2>Merchant Order Data</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Created At</th>
+        <th>Expected Date</th>
+        <th>Destination</th>
+        <th>Status</th>
+    </tr>
+    <c:forEach var="order" items="${orderList}">
+        <tr>
+            <td>${order.id}</td>
+            <td>${order.product}</td>
+            <td>${order.qty}</td>
+            <td>${order.createdAt}</td>
+            <td>${order.expectedDate}</td>
+            <td>${order.destination}</td>
+            <td>${order.orderStatus}</td>
+        </tr>
+    </c:forEach>
+</table>
 </body>
 </html>

@@ -1,11 +1,13 @@
 package com.jiat.web.servlet.merchant;
 
+import com.jiat.core.models.MerchantOrderDataModel;
 import com.jiat.ejb.entity.Destination;
+import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.entity.Product;
-import com.jiat.ejb.remote.DestinationService;
 import com.jiat.ejb.remote.OrderService;
 import com.jiat.ejb.remote.ProductService;
 import com.jiat.ejb.remote.RetrieveDestination;
+import com.jiat.ejb.remote.RetrieveMerchantOrders;
 import jakarta.ejb.EJB;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/make-order")
@@ -28,6 +31,8 @@ public class MakeOrderServlet extends HttpServlet {
 
     @EJB
     private RetrieveDestination retrieveDestination;
+    @EJB
+    private RetrieveMerchantOrders retrieveMerchantOrdersBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,19 +41,31 @@ public class MakeOrderServlet extends HttpServlet {
             return;
         }
         String merchantName = request.getSession().getAttribute("name").toString();
+        List<Orders> merchantOrders = retrieveMerchantOrdersBean.getOrders(merchantName);
+        List<MerchantOrderDataModel> merchantOrderDataModels = new ArrayList<>();
+        merchantOrders.stream().forEach(e->{
+            MerchantOrderDataModel model = new MerchantOrderDataModel();
+            model.setId(e.getId());
+            model.setDestination(e.getDestination().getDestinationName());
+            model.setExpectedDate(e.getExpectedDate());
+            model.setCreatedAt(e.getCreatedAt());
+            model.setQty(Integer.toString(e.getQty()));
+            model.setProduct(e.getProductId().getTitle());
+            model.setOrderStatus(e.getOrderStatus());
+            merchantOrderDataModels.add(model);
+
+        });
         if (productService.getProductsByMerchantName(merchantName) != null) {
             System.out.println("not null");
             List<Product> products = productService.getProductsByMerchantName(merchantName);
             List<Destination> destinations = retrieveDestination.retrieveDestinations();
 
-            // Print product names to console for testing
-//            for (Product product : products) {
-//                System.out.println("Product Name: " + product.getTitle());
-//            }
+
 
             destinations.forEach(e-> System.out.println(e.getDestinationName()));
             request.setAttribute("productList", products);
             request.setAttribute("destinationList", destinations);
+            request.setAttribute("orderList",merchantOrderDataModels);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/merchant/make-order.jsp");
             dispatcher.forward(request, response);
         }

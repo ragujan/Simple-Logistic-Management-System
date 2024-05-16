@@ -19,7 +19,6 @@ import java.util.List;
 
 //Container managed transaction
 @Stateful
-//@TransactionManagement(TransactionManagementType.BEAN)
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class OrderServiceBean implements OrderService {
     @PersistenceContext(unitName = "WebPU")
@@ -28,22 +27,6 @@ public class OrderServiceBean implements OrderService {
 
     @EJB
     ProductService productService;
-
-
-    private Destination getDestinationById(String id) {
-        try {
-            Destination destination =  em.createQuery(
-                            "SELECT p FROM Destination p WHERE p.id = :id",
-                            Destination.class)
-                    .setParameter("id", Integer.parseInt(id)).getSingleResult();
-
-            return destination;
-        }catch (NoResultException ex){
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
     @Override
     public boolean createOrder(String destinationId, String merchantName, String productName, String qty, String expectedDate) {
 
@@ -70,6 +53,7 @@ public class OrderServiceBean implements OrderService {
             orders.setProductId(product);
             orders.setExpectedDate(formattedExpectedDate);
             orders.setDestination(destination);
+            orders.setOrderStatus("not_shipped");
 
             em.persist(orders);
             return true;
@@ -80,4 +64,20 @@ public class OrderServiceBean implements OrderService {
 
         return false;
     }
+
+    private Destination getDestinationById(String id) {
+        try {
+            Destination destination =  em.createQuery(
+                            "SELECT p FROM Destination p WHERE p.id = :id",
+                            Destination.class)
+                    .setParameter("id", Integer.parseInt(id)).getSingleResult();
+
+            return destination;
+        }catch (NoResultException ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
