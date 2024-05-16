@@ -3,9 +3,7 @@ package com.jiat.ejb.impl.route;
 import com.jiat.ejb.entity.Destination;
 import com.jiat.ejb.entity.Route;
 import com.jiat.ejb.remote.RouteService;
-import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionManagement;
-import jakarta.ejb.TransactionManagementType;
+import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -13,33 +11,33 @@ import jakarta.transaction.UserTransaction;
 
 import java.util.List;
 
-//Bean managed transaction
-@Stateless
-//@Stateful
-@TransactionManagement(TransactionManagementType.BEAN)
+//Container managed transaction
+@Stateful
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class RouteServiceBean implements RouteService {
 
 
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
-    @Inject
-    private UserTransaction transaction;
+//    @Inject
+//    private UserTransaction transaction;
 
     @Override
+//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean registerRoute(Destination destination, String name, String startingPoint, String destinationPoint) {
         try {
             // Begin transaction
-            transaction.begin();
+//            transaction.begin();
 
             // Create a new Route
-            Route route = new Route(startingPoint, destinationPoint, name);
+            Route route = new Route(destination,startingPoint, destinationPoint, name);
 
             // Persist the Route
             em.persist(route);
 
             // Commit transaction
-            transaction.commit();
+//            transaction.commit();
 
             return true;
         } catch (Exception e) {

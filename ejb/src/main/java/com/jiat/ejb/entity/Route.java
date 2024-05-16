@@ -24,7 +24,8 @@ public class Route {
 
     public Route() {}
 
-    public Route(String startingPoint, String destinationPoint, String name) {
+    public Route(Destination destination,String startingPoint, String destinationPoint, String name) {
+        this.destinationId = destination;
         this.startingPoint = startingPoint;
         this.destinationPoint = destinationPoint;
         this.name = name;

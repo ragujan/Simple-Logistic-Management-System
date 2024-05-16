@@ -1,3 +1,4 @@
 com\jiat\core\models\FreightDataModel.class
 com\jiat\core\models\TransportationDataModel.class
+Test.class
 util\DateFormatterUtil.class

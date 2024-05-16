@@ -1,7 +1,9 @@
 package com.jiat.ejb.impl;
 
 import com.jiat.ejb.entity.*;
+import com.jiat.ejb.remote.DestinationService;
 import com.jiat.ejb.remote.Test2;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -22,10 +24,14 @@ public class Test2Bean implements Test2 {
     @Inject
     private UserTransaction transaction;
 
+    @EJB
+    private DestinationService destinationService;
+
+
     @Override
     public boolean action() {
         try {
-            transaction.begin();
+//            transaction.begin();
 //            Merchant merchant = new Merchant();
 //            merchant.setName("test 2 test 2");
 //
@@ -33,44 +39,20 @@ public class Test2Bean implements Test2 {
 //            product.setTitle("new product");
 //            product.setWeight("55kg");
 
-            Destination destination = new Destination();
-            destination.setDestinationName("Shenzhen-Cape Town-Oakland-Texas");
-            em.persist(destination);
-            Route route1 = new Route();
-            route1.setName("Shenzen-Cape Town");
-            route1.setStartingPoint("Shenzen");
-            route1.setDestinationPoint("CapeTown");
-            route1.setDestinationId(destination);
-            em.persist(route1);
+//            Destination destination = new Destination();
+//            destination.setDestinationName("Shenzhen-Cape Town-Oakland-Texas");
+//            em.persist(destination);
+            destinationService.addDestination("Shenzhen-Cape Town-Oakland-Texas");
 
-            Route route2 = new Route();
-            route2.setName("Cape Town - Oakland");
-            route2.setStartingPoint("Cape Town");
-            route2.setDestinationPoint("Oakland");
-            route2.setDestinationId(destination);
-            em.persist(route2);
-
-            Route route3 = new Route();
-            route3.setName("Oakland - Texas");
-            route3.setStartingPoint("Oakland");
-            route3.setDestinationPoint("Texas");
-            route3.setDestinationId(destination);
-            em.persist(route3);
-
-
-
-            transaction.commit();
+//            transaction.commit();
             System.out.println("hey");
 
         } catch (Exception e) {
             System.out.println("exception occurred");
-            try {
-                System.out.println("rollback");
-                transaction.rollback();
-                e.printStackTrace();
-            } catch (SystemException ex) {
-                throw new RuntimeException(ex);
-            }
+
+//                transaction.rollback();
+            e.printStackTrace();
+
         }
 
         return true;
