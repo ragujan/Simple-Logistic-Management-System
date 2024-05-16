@@ -1,5 +1,6 @@
 package com.jiat.web.servlet.route;
 
+import com.jiat.ejb.entity.Destination;
 import com.jiat.ejb.remote.RouteService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.*;
@@ -26,7 +27,7 @@ public class AddRouteServlet extends HttpServlet {
 
         if (name != null && !name.isEmpty() && startingPoint != null && !startingPoint.isEmpty()
                 && destinationPoint != null && !destinationPoint.isEmpty()) {
-            boolean success = routeService.registerRoute(name, startingPoint, destinationPoint);
+            boolean success = routeService.registerRoute(new Destination(),name, startingPoint, destinationPoint);
 
             if (success) {
                 request.setAttribute("success_message", "Route successfully registered");

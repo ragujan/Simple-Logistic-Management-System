@@ -1,8 +1,7 @@
 package com.jiat.ejb.impl.route;
 
+import com.jiat.ejb.entity.Destination;
 import com.jiat.ejb.entity.Route;
-import com.jiat.ejb.entity.Transportation;
-import com.jiat.ejb.entity.TransportationType;
 import com.jiat.ejb.remote.RouteService;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
@@ -28,7 +27,7 @@ public class RouteServiceBean implements RouteService {
     private UserTransaction transaction;
 
     @Override
-    public boolean registerRoute(String name, String startingPoint, String destinationPoint) {
+    public boolean registerRoute(Destination destination, String name, String startingPoint, String destinationPoint) {
         try {
             // Begin transaction
             transaction.begin();
@@ -54,6 +53,11 @@ public class RouteServiceBean implements RouteService {
     public List<Route> getAllRoutes() {
         return em.createQuery("SELECT tt FROM Route tt", Route.class)
                 .getResultList();
+    }
+
+    @Override
+    public boolean registerDestination(String name) {
+        return false;
     }
 
 

@@ -16,6 +16,10 @@ public class Route {
     @Column(name = "destination_point")
     private String destinationPoint;
 
+    @ManyToOne
+    @JoinColumn(name = "destination_id")
+    private Destination destinationId;
+
     private String name;
 
     public Route() {}
@@ -24,6 +28,14 @@ public class Route {
         this.startingPoint = startingPoint;
         this.destinationPoint = destinationPoint;
         this.name = name;
+    }
+
+    public Destination getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(Destination destinationId) {
+        this.destinationId = destinationId;
     }
 
     public Integer getId() {

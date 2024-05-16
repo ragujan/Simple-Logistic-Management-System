@@ -1,8 +1,6 @@
 package com.jiat.ejb.impl;
 
-import com.jiat.ejb.entity.Merchant;
-import com.jiat.ejb.entity.Orders;
-import com.jiat.ejb.entity.Product;
+import com.jiat.ejb.entity.*;
 import com.jiat.ejb.remote.Test2;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
@@ -35,24 +33,32 @@ public class Test2Bean implements Test2 {
 //            product.setTitle("new product");
 //            product.setWeight("55kg");
 
-            Merchant merchant = em.find(Merchant.class, 1L); // Assuming merchant id is 1
-            Product product = em.find(Product.class, 1L);
-            System.out.println("merchant name is "+merchant.getName());
-            System.out.println("product name is "+product.getTitle());
+            Destination destination = new Destination();
+            destination.setDestinationName("Shenzhen-Cape Town-Oakland-Texas");
+            em.persist(destination);
+            Route route1 = new Route();
+            route1.setName("Shenzen-Cape Town");
+            route1.setStartingPoint("Shenzen");
+            route1.setDestinationPoint("CapeTown");
+            route1.setDestinationId(destination);
+            em.persist(route1);
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDateTime = LocalDateTime.now().format(formatter);
+            Route route2 = new Route();
+            route2.setName("Cape Town - Oakland");
+            route2.setStartingPoint("Cape Town");
+            route2.setDestinationPoint("Oakland");
+            route2.setDestinationId(destination);
+            em.persist(route2);
+
+            Route route3 = new Route();
+            route3.setName("Oakland - Texas");
+            route3.setStartingPoint("Oakland");
+            route3.setDestinationPoint("Texas");
+            route3.setDestinationId(destination);
+            em.persist(route3);
 
 
-            Orders orders = new Orders();
-            orders.setId(11L);
-            orders.setCreatedAt(LocalDateTime.parse(formattedDateTime, formatter));
-            orders.setQty(5);
-            orders.setProductId(product);
 
-            System.out.println("order product is "+ orders.getProductId().getTitle());
-
-            em.persist(orders);
             transaction.commit();
             System.out.println("hey");
 

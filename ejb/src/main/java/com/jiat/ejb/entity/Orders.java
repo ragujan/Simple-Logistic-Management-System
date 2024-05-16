@@ -4,6 +4,8 @@ package com.jiat.ejb.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -14,10 +16,15 @@ public class Orders {
     private Long id;
 
 
-//    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product productId;
+
+
+    @OneToMany
+//    @Column(name = "destination_id")
+    @JoinColumn(name = "id")
+    private List<Destination> destinationSet= new ArrayList<>();
 
     @Column(name = "qty")
     private Integer qty;
@@ -25,6 +32,9 @@ public class Orders {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+
+    @Column(name = "expected_date")
+    private LocalDateTime expectedDate;
     public LocalDateTime getExpectedDate() {
         return expectedDate;
     }
@@ -32,9 +42,6 @@ public class Orders {
     public void setExpectedDate(LocalDateTime expectedDate) {
         this.expectedDate = expectedDate;
     }
-
-    @Column(name = "expected_date")
-    private LocalDateTime expectedDate;
 
     // Constructors, getters, and setters
     // Constructors
@@ -44,6 +51,14 @@ public class Orders {
         this.productId = productId;
         this.qty = qty;
         this.createdAt = createdAt;
+    }
+
+    public List<Destination> getDestinationSet() {
+        return destinationSet;
+    }
+
+    public void setDestinationSet(List<Destination> destinationSet) {
+        this.destinationSet = destinationSet;
     }
 
     // Getters and setters
