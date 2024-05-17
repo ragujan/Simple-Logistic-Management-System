@@ -1,26 +1,22 @@
 package com.jiat.ejb.impl.merchant;
 
 import com.jiat.ejb.entity.Destination;
-import com.jiat.ejb.entity.Merchant;
 import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.entity.Product;
-import com.jiat.ejb.exception.EntityRelatedException;
-import com.jiat.ejb.remote.OrderService;
+import com.jiat.ejb.remote.OrderInsertionService;
 import com.jiat.ejb.remote.ProductService;
 import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 //Container managed transaction
 @Stateful
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class OrderServiceBean implements OrderService {
+public class OrderInsertionServiceBean implements OrderInsertionService {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 

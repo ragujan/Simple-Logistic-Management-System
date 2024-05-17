@@ -70,7 +70,7 @@ public class FreightRegistrationServlet extends HttpServlet {
         request.setAttribute("transportationList", transportationList);
         request.setAttribute("routeList", routeList);
 
-        request.getRequestDispatcher("/freight/freight-registration.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/freight/freight-registration.jsp").forward(request, response);
     }
 
 

@@ -4,7 +4,7 @@ import com.jiat.core.models.MerchantOrderDataModel;
 import com.jiat.ejb.entity.Destination;
 import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.entity.Product;
-import com.jiat.ejb.remote.OrderService;
+import com.jiat.ejb.remote.OrderInsertionService;
 import com.jiat.ejb.remote.ProductService;
 import com.jiat.ejb.remote.RetrieveDestination;
 import com.jiat.ejb.remote.RetrieveMerchantOrders;
@@ -27,7 +27,7 @@ public class MakeOrderServlet extends HttpServlet {
     private ProductService productService;
 
     @EJB
-    private OrderService orderService;
+    private OrderInsertionService orderInsertionService;
 
     @EJB
     private RetrieveDestination retrieveDestination;
@@ -93,7 +93,7 @@ public class MakeOrderServlet extends HttpServlet {
             Product productEntity = productService.getProductsByProductName(product);
 
             System.out.println("product weight is " + productEntity.getWeight());
-            boolean status = orderService.createOrder(destinationId,merchantName, product, qty, expectedDate);
+            boolean status = orderInsertionService.createOrder(destinationId,merchantName, product, qty, expectedDate);
             if (status) {
                 request.setAttribute("success_message", "Order is made success");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("success_page/common_page.jsp");

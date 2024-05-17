@@ -31,6 +31,13 @@ public class Test2Bean implements Test2 {
     @Override
     public boolean action() {
         try {
+            transaction.begin();
+            FreightHasOrders freightHasOrders = new FreightHasOrders();
+            Freight freight = em.createQuery("SElECT f FROM Freight f WHERE f.id=:id",Freight.class).setParameter("id",1).getSingleResult();
+            Orders orders = em.createQuery("SELECT o FROM Orders o WHERE o.id=:id", Orders.class).setParameter("id",1).getSingleResult();
+            freightHasOrders.setFreight(freight);
+            freightHasOrders.setOrders(orders);
+            em.persist(freightHasOrders);
 //            transaction.begin();
 //            Merchant merchant = new Merchant();
 //            merchant.setName("test 2 test 2");
@@ -42,15 +49,19 @@ public class Test2Bean implements Test2 {
 //            Destination destination = new Destination();
 //            destination.setDestinationName("Shenzhen-Cape Town-Oakland-Texas");
 //            em.persist(destination);
-            destinationService.addDestination("Shenzhen-Cape Town-Oakland-Texas");
+//            destinationService.addDestination("Shenzhen-Cape Town-Oakland-Texas");
 
-//            transaction.commit();
+            transaction.commit();
             System.out.println("hey");
 
         } catch (Exception e) {
             System.out.println("exception occurred");
 
-//                transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (SystemException ex) {
+                throw new RuntimeException(ex);
+            }
             e.printStackTrace();
 
         }

@@ -45,6 +45,14 @@ public class Destination implements Serializable {
         this.destinationName = destinationName;
     }
 
+    public List<Route> getRouteSet() {
+        return routeSet;
+    }
+
+    public void setRouteSet(List<Route> routeSet) {
+        this.routeSet = routeSet;
+    }
+
     // toString method
     @Override
     public String toString() {
