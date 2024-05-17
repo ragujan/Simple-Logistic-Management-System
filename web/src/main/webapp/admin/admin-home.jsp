@@ -16,7 +16,7 @@
 <br>
 <a href="register-transportation-type">Register Transportation Type</a>
 <br>
-<a href="add-route">Add Routes</a>
+<a href="add-destination">Add Destinations</a>
 <br>
 </body>
 </html>

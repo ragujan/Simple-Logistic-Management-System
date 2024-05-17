@@ -1,4 +1,4 @@
-package com.jiat.web.servlet.transportation;
+package com.jiat.web.servlet.admin.transportation;
 
 import com.jiat.ejb.entity.Product;
 import com.jiat.ejb.remote.TransportationService;

@@ -1,8 +1,7 @@
 package com.jiat.ejb.impl.merchant;
 
-import com.jiat.ejb.entity.Destination;
-import com.jiat.ejb.entity.Orders;
-import com.jiat.ejb.entity.Product;
+import com.jiat.ejb.entity.*;
+import com.jiat.ejb.exception.NoMatchingFreightForRouteException;
 import com.jiat.ejb.remote.OrderInsertionService;
 import com.jiat.ejb.remote.ProductService;
 import jakarta.ejb.*;
@@ -12,6 +11,8 @@ import jakarta.persistence.PersistenceContext;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 //Container managed transaction
 @Stateful
@@ -23,6 +24,7 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
 
     @EJB
     ProductService productService;
+
     @Override
     public boolean createOrder(String destinationId, String merchantName, String productName, String qty, String expectedDate) {
 
@@ -51,8 +53,45 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
             orders.setDestination(destination);
             orders.setOrderStatus("not_shipped");
 
+
             em.persist(orders);
-            return true;
+
+//            after order is created now it's time to add the order to freights
+            LocalDateTime orderCreatedDate = orders.getCreatedAt();
+            LocalDateTime orderExpectedDate = orders.getExpectedDate();
+            Destination orderDestination = orders.getDestination();
+            List<Route> routes = em.createQuery("SELECT r FROM Route  r where r.destinationId=:destinationId", Route.class).setParameter("destinationId", orderDestination).getResultList();
+
+            routes.forEach(e -> System.out.println("route names are " + e.getName()));
+            List<Freight> possibleFreights = new ArrayList<>();
+
+            routes.forEach(route -> {
+                try {
+                    Freight freight = em.createQuery("SELECT fr FROM Freight fr where fr.route=:firstRoute AND fr.startDate > :orderCreatedDate AND fr.endDate <:orderExpectedDate", Freight.class)
+                            .setParameter("firstRoute", route)
+                            .setParameter("orderCreatedDate", orderCreatedDate)
+                            .setParameter("orderExpectedDate", orderExpectedDate)
+                            .getSingleResult();
+                    possibleFreights.add(freight);
+                } catch (NoResultException ex) {
+                    throw new NoMatchingFreightForRouteException("Route doesn't have a valid freight");
+                }
+
+            });
+
+
+            if (possibleFreights != null) {
+                possibleFreights.forEach(e -> {
+                    System.out.println("Freight Ids are " + e.getId());
+                    FreightHasOrders freightHasOrders = new FreightHasOrders();
+                    freightHasOrders.setOrders(orders);
+                    freightHasOrders.setFreight(e);
+                    em.persist(freightHasOrders);
+                });
+                return true;
+            }
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -63,17 +102,28 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
 
     private Destination getDestinationById(String id) {
         try {
-            Destination destination =  em.createQuery(
+            Destination destination = em.createQuery(
                             "SELECT p FROM Destination p WHERE p.id = :id",
                             Destination.class)
                     .setParameter("id", Integer.parseInt(id)).getSingleResult();
 
             return destination;
-        }catch (NoResultException ex){
+        } catch (NoResultException ex) {
             ex.printStackTrace();
         }
         return null;
     }
 
+    public boolean addOrderToAvailableFreight(Orders order) {
+        try {
+
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
 
 }

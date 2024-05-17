@@ -1,4 +1,4 @@
-package com.jiat.web.servlet.freight;
+package com.jiat.web.servlet.admin.freight;
 
 import com.jiat.core.models.FreightDataModel;
 import com.jiat.ejb.entity.Freight;

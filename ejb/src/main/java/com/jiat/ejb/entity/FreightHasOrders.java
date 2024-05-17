@@ -2,9 +2,11 @@ package com.jiat.ejb.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "freight_has_orders")
-public class FreightHasOrders {
+public class FreightHasOrders implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

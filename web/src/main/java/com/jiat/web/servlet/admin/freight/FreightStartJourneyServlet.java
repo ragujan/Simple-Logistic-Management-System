@@ -1,4 +1,4 @@
-package com.jiat.web.servlet.freight;
+package com.jiat.web.servlet.admin.freight;
 
 import com.jiat.ejb.remote.FreightRegisterService;
 import com.jiat.ejb.remote.FreightStatusUpdateService;

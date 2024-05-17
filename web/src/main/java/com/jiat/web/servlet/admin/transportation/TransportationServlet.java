@@ -1,4 +1,4 @@
-package com.jiat.web.servlet.transportation;
+package com.jiat.web.servlet.admin.transportation;
 
 import com.jiat.core.models.TransportationDataModel;
 import com.jiat.ejb.entity.Transportation;

@@ -79,9 +79,6 @@ public class MakeOrderServlet extends HttpServlet {
         String expectedDate = request.getParameter("expectedDate");
         String destinationId = request.getParameter("destinationId");
 
-        System.out.println("destination id "+ destinationId);
-//        response.getWriter().write(destinationId);
-        System.out.println("product name is " + product);
 
         // Dispatch to JSP page
         if (request.getSession().getAttribute("name") == null) {
@@ -89,10 +86,8 @@ public class MakeOrderServlet extends HttpServlet {
         }
         String merchantName = request.getSession().getAttribute("name").toString();
         if (productService.getProductsByProductName(product) != null) {
-            System.out.println("not null");
             Product productEntity = productService.getProductsByProductName(product);
 
-            System.out.println("product weight is " + productEntity.getWeight());
             boolean status = orderInsertionService.createOrder(destinationId,merchantName, product, qty, expectedDate);
             if (status) {
                 request.setAttribute("success_message", "Order is made success");
