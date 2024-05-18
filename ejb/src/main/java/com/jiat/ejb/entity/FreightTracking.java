@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "freight_tracking")
 public class FreightTracking implements Serializable {
 
 

@@ -1,9 +1,9 @@
 package com.jiat.ejb.remote;
 
-import com.jiat.ejb.entity.Destination;
+import com.jiat.core.models.DestinationDataModel;
 
 import java.util.List;
 
 public interface RetrieveDestination {
-    public List<Destination> retrieveDestinations();
+    public List<DestinationDataModel> retrieveDestinations();
 }

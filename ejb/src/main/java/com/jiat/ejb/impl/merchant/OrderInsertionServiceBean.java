@@ -67,10 +67,11 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
 
             routes.forEach(route -> {
                 try {
-                    Freight freight = em.createQuery("SELECT fr FROM Freight fr where fr.route=:firstRoute AND fr.startDate > :orderCreatedDate AND fr.endDate <:orderExpectedDate", Freight.class)
+//                    Freight freight = em.createQuery("SELECT fr FROM Freight fr where fr.route=:firstRoute AND fr.startDate > :orderCreatedDate AND fr.endDate <:orderExpectedDate", Freight.class)
+                    Freight freight = em.createQuery("SELECT fr FROM Freight fr where fr.route=:firstRoute AND fr.startDate > :orderCreatedDate ", Freight.class)
                             .setParameter("firstRoute", route)
                             .setParameter("orderCreatedDate", orderCreatedDate)
-                            .setParameter("orderExpectedDate", orderExpectedDate)
+//                            .setParameter("orderExpectedDate", orderExpectedDate)
                             .getSingleResult();
                     possibleFreights.add(freight);
                 } catch (NoResultException ex) {
@@ -87,9 +88,16 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
                     freightHasOrders.setOrders(orders);
                     freightHasOrders.setFreight(e);
                     em.persist(freightHasOrders);
+                    FreightTracking freightTracking = new FreightTracking();
+                    freightTracking.setCoordinates("0 0");
+                    freightTracking.setFreightHasOrders(freightHasOrders);
+                    freightTracking.setExpectedDelay("0");
+                    freightTracking.setRouteProgress("not started");
+                    em.persist(freightTracking);
                 });
                 return true;
             }
+
 
 
         } catch (Exception ex) {

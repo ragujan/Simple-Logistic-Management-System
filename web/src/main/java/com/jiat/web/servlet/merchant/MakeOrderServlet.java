@@ -1,13 +1,11 @@
 package com.jiat.web.servlet.merchant;
 
+import com.jiat.core.models.DestinationDataModel;
 import com.jiat.core.models.MerchantOrderDataModel;
 import com.jiat.ejb.entity.Destination;
 import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.entity.Product;
-import com.jiat.ejb.remote.OrderInsertionService;
-import com.jiat.ejb.remote.ProductService;
-import com.jiat.ejb.remote.RetrieveDestination;
-import com.jiat.ejb.remote.RetrieveMerchantOrders;
+import com.jiat.ejb.remote.*;
 import jakarta.ejb.EJB;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -34,6 +32,9 @@ public class MakeOrderServlet extends HttpServlet {
     @EJB
     private RetrieveMerchantOrders retrieveMerchantOrdersBean;
 
+    @EJB
+    private FreightRetrieval freightRetrieval;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Dispatch to JSP page
@@ -58,11 +59,11 @@ public class MakeOrderServlet extends HttpServlet {
         if (productService.getProductsByMerchantName(merchantName) != null) {
             System.out.println("not null");
             List<Product> products = productService.getProductsByMerchantName(merchantName);
-            List<Destination> destinations = retrieveDestination.retrieveDestinations();
+            List<DestinationDataModel> destinations = retrieveDestination.retrieveDestinations();
 
 
 
-            destinations.forEach(e-> System.out.println(e.getDestinationName()));
+//            destinations.forEach(e-> System.out.println(e.getDestinationName()));
             request.setAttribute("productList", products);
             request.setAttribute("destinationList", destinations);
             request.setAttribute("orderList",merchantOrderDataModels);
@@ -77,8 +78,8 @@ public class MakeOrderServlet extends HttpServlet {
         String qty = request.getParameter("qty");
         String product = request.getParameter("product");
         String expectedDate = request.getParameter("expectedDate");
-        String destinationId = request.getParameter("destinationId");
-
+//        String destinationId = request.getParameter("destinationId");
+        String freightId = request.getParameter("freightId");
 
         // Dispatch to JSP page
         if (request.getSession().getAttribute("name") == null) {
@@ -88,7 +89,9 @@ public class MakeOrderServlet extends HttpServlet {
         if (productService.getProductsByProductName(product) != null) {
             Product productEntity = productService.getProductsByProductName(product);
 
-            boolean status = orderInsertionService.createOrder(destinationId,merchantName, product, qty, expectedDate);
+            Integer destinationId = freightRetrieval.getFreightDestinationIdByFreightId(freightId);
+
+            boolean status = orderInsertionService.createOrder(Integer.toString(destinationId),merchantName, product, qty, expectedDate);
             if (status) {
                 request.setAttribute("success_message", "Order is made success");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("success_page/common_page.jsp");

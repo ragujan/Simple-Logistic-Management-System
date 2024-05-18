@@ -44,9 +44,9 @@
             <option value="${product.title}">${product.title}</option>
         </c:forEach>
     </select>
-    <select id="destinationId" name="destinationId">
+    <select id="freightId" name="freightId">
         <c:forEach items="${destinationList}" var="destination">
-            <option value="${destination.id}">${destination.destinationName}</option>
+            <option  value="${destination.freightId}">${destination.destinationWithStartingDate}</option>
         </c:forEach>
     </select>
 
