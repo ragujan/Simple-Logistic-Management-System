@@ -46,8 +46,6 @@ public class AccountServiceBean implements AccountService {
                             throw new RuntimeException(ex);
                         }
                     }
-
-
                 }
             } else {
                 throw new AccountNotFoundException("Account not found!");

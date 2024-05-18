@@ -3,8 +3,8 @@ package com.jiat.core.models;
 public class FreightTrackingDataModel {
     private Integer freightTrackingId;
     private Integer freightId;
-    private Integer freightRoute;
-    private Integer routeDestination;
+    private String freightRoute;
+    private String routeDestination;
     private String freightProgress;
     private String coordinates;
     private String expectedDelay;
@@ -25,19 +25,19 @@ public class FreightTrackingDataModel {
         this.freightId = freightId;
     }
 
-    public Integer getFreightRoute() {
+    public String getFreightRoute() {
         return freightRoute;
     }
 
-    public void setFreightRoute(Integer freightRoute) {
+    public void setFreightRoute(String freightRoute) {
         this.freightRoute = freightRoute;
     }
 
-    public Integer getRouteDestination() {
+    public String getRouteDestination() {
         return routeDestination;
     }
 
-    public void setRouteDestination(Integer routeDestination) {
+    public void setRouteDestination(String routeDestination) {
         this.routeDestination = routeDestination;
     }
 

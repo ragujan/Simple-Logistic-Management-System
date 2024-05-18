@@ -55,7 +55,14 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
 
         FreightTrackingDataModel model = new FreightTrackingDataModel();
 
+        model.setCoordinates(freightTracking.getCoordinates());
+        model.setFreightId(freight.getId());
+        model.setFreightProgress(freightTracking.getRouteProgress());
+        model.setExpectedDelay(freightTracking.getExpectedDelay());
+        model.setFreightTrackingId(freightTracking.getId());
+        model.setRouteDestination(freight.getRoute().getDestinationId().getDestinationName());
+        model.setFreightRoute(freight.getRoute().getName());
 
-        return null;
+        return model;
     }
 }
