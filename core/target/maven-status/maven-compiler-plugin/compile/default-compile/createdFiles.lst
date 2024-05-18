@@ -1,6 +1,7 @@
-com\jiat\core\models\MerchantOrderDataModel.class
 com\jiat\core\models\FreightDataModel.class
+com\jiat\core\models\MerchantOrderDataModel.class
 com\jiat\core\models\TransportationDataModel.class
 Test.class
 util\DateFormatterUtil.class
+com\jiat\core\models\FreightTrackingDataModel.class
 com\jiat\core\models\DestinationDataModel.class

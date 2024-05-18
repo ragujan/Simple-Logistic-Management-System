@@ -1,6 +1,7 @@
 package com.jiat.ejb.impl.freight_tracking;
 
-import com.jiat.ejb.entity.FreightHasOrders;
+import com.jiat.core.models.FreightTrackingDataModel;
+import com.jiat.ejb.entity.Freight;
 import com.jiat.ejb.entity.FreightTracking;
 import com.jiat.ejb.remote.FreightTrackingDataGeneration;
 import jakarta.ejb.Stateful;
@@ -19,11 +20,41 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
     private EntityManager em;
 
     @Override
-    public FreightTracking getFreightTracking(FreightHasOrders freightHasOrders) {
-        FreightTracking freightTracking = em.createQuery("SELECT f FROM FreightTracking f WHERE f.freightHasOrders=:freightHasOrders", FreightTracking.class)
-                .setParameter("freightHasOrders", freightHasOrders)
+    public FreightTrackingDataModel getFreightTracking(Freight freight) {
+        FreightTracking freightTracking = em.createQuery("SELECT f FROM FreightTracking f WHERE f.freight=:freight", FreightTracking.class)
+                .setParameter("freight", freight)
                 .getSingleResult();
         freightTracking.setCoordinates(Integer.toString(new Random().nextInt(500)));
+        String progress = freightTracking.getRouteProgress();
+        if(progress.equals("not started")){
+            freightTracking.setRouteProgress("20%");
+        }
+        if (progress.equals("20%")) {
+            freightTracking.setRouteProgress("40%");
+            progress = "40%";
+        }
+
+        if (progress.equals("40%")) {
+            freightTracking.setRouteProgress("60%");
+            progress = "60%";
+        }
+
+        if (progress.equals("60%")) {
+            freightTracking.setRouteProgress("80%");
+            progress = "80%";
+        }
+
+        if (progress.equals("80%")) {
+            freightTracking.setRouteProgress("100%");
+            progress = "100%";
+            freightTracking.getFreight().setDelivered(true);
+        }
+        freightTracking.getFreight().setHasStarted(true);
+
+        em.merge(freightTracking);
+
+        FreightTrackingDataModel model = new FreightTrackingDataModel();
+
 
         return null;
     }

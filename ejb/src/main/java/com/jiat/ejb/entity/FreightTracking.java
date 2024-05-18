@@ -25,8 +25,8 @@ public class FreightTracking implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "freight_has_orders_id")
-    private FreightHasOrders freightHasOrders;
+    @JoinColumn(name = "freight_id")
+    private Freight freight;
 
     public Integer getId() {
         return id;
@@ -60,11 +60,11 @@ public class FreightTracking implements Serializable {
         this.expectedDelay = expectedDelay;
     }
 
-    public FreightHasOrders getFreightHasOrders() {
-        return freightHasOrders;
+    public Freight getFreight() {
+        return freight;
     }
 
-    public void setFreightHasOrders(FreightHasOrders freightHasOrders) {
-        this.freightHasOrders = freightHasOrders;
+    public void setFreight(Freight freight) {
+        this.freight = freight;
     }
 }

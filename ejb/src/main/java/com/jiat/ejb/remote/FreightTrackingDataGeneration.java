@@ -1,8 +1,8 @@
 package com.jiat.ejb.remote;
 
-import com.jiat.ejb.entity.FreightHasOrders;
-import com.jiat.ejb.entity.FreightTracking;
+import com.jiat.core.models.FreightTrackingDataModel;
+import com.jiat.ejb.entity.Freight;
 
 public interface FreightTrackingDataGeneration {
-    public FreightTracking getFreightTracking(FreightHasOrders freightHasOrders);
+    public FreightTrackingDataModel getFreightTracking(Freight freightHasOrders);
 }

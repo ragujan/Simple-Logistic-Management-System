@@ -72,7 +72,7 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
                             .setParameter("firstRoute", route)
                             .setParameter("orderCreatedDate", orderCreatedDate)
 //                            .setParameter("orderExpectedDate", orderExpectedDate)
-                            .getSingleResult();
+                            .setMaxResults(1).getSingleResult();
                     possibleFreights.add(freight);
                 } catch (NoResultException ex) {
                     throw new NoMatchingFreightForRouteException("Route doesn't have a valid freight");
@@ -90,7 +90,7 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
                     em.persist(freightHasOrders);
                     FreightTracking freightTracking = new FreightTracking();
                     freightTracking.setCoordinates("0 0");
-                    freightTracking.setFreightHasOrders(freightHasOrders);
+                    freightTracking.setFreight(e);
                     freightTracking.setExpectedDelay("0");
                     freightTracking.setRouteProgress("not started");
                     em.persist(freightTracking);
