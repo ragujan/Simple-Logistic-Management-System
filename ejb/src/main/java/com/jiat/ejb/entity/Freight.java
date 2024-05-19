@@ -2,6 +2,7 @@ package com.jiat.ejb.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -40,6 +41,30 @@ public class Freight implements Serializable {
     private boolean failed;
     @Column(name = "has_started")
     private boolean hasStarted;
+
+
+    @OneToMany(mappedBy = "freight")
+    private List<FreightTracking> freightTrackings;
+
+    @OneToMany(mappedBy = "freight")
+    private List<FreightHasOrders> freightHasOrders;
+
+
+    public List<FreightTracking> getFreightTrackings() {
+        return freightTrackings;
+    }
+
+    public void setFreightTrackings(List<FreightTracking> freightTrackings) {
+        this.freightTrackings = freightTrackings;
+    }
+
+    public List<FreightHasOrders> getFreightHasOrders() {
+        return freightHasOrders;
+    }
+
+    public void setFreightHasOrders(List<FreightHasOrders> freightHasOrders) {
+        this.freightHasOrders = freightHasOrders;
+    }
 
     public boolean isHasStarted() {
         return hasStarted;

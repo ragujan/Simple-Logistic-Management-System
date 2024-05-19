@@ -21,5 +21,6 @@
 <h1>Hello, ${sessionScope.name}</h1>
 <a href="register-product.jsp">Register Product</a>
 <a href="/web/make-order">Make Order</a>
+<a href="/web/merchant-view-order-tracking">Track Order</a>
 </body>
 </html>
