@@ -11,10 +11,7 @@
     <title>Merchant Home</title>
 </head>
 <%
-    if (session.getAttribute("login") == null) {
-//        response.sendRedirect("/web/login-merchant");
-        session.setAttribute("name", "Test");
-    }
+
 %>
 <body>
 <h1>Merchant Home</h1>
