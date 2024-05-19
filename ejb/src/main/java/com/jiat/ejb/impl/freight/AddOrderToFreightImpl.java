@@ -2,6 +2,7 @@ package com.jiat.ejb.impl.freight;
 
 import com.jiat.ejb.entity.*;
 import com.jiat.ejb.remote.AddOrderToFreight;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -18,7 +19,7 @@ public class AddOrderToFreightImpl implements AddOrderToFreight {
 
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
-
+    @RolesAllowed({"merchant"})
     @Override
     public boolean addOrderToAvailableFreight(Orders order) {
         try {

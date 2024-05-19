@@ -3,6 +3,7 @@ package com.jiat.ejb.impl.merchant;
 import com.jiat.ejb.entity.Merchant;
 import com.jiat.ejb.entity.Product;
 import com.jiat.ejb.remote.MerchantService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;

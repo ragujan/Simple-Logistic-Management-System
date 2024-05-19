@@ -3,6 +3,7 @@ package com.jiat.ejb.impl.transportation;
 import com.jiat.ejb.entity.Transportation;
 import com.jiat.ejb.entity.TransportationType;
 import com.jiat.ejb.remote.TransportationService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
@@ -27,7 +28,7 @@ public class TransportationServiceBean implements TransportationService {
 
     @Inject
     private UserTransaction transaction;
-
+    @RolesAllowed({"admin"})
     @Override
     public boolean addTransportationType(String name) {
         try {

@@ -3,6 +3,7 @@ package com.jiat.ejb.impl.route;
 import com.jiat.ejb.entity.Destination;
 import com.jiat.ejb.entity.Route;
 import com.jiat.ejb.remote.RouteService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -20,9 +21,9 @@ public class RouteServiceBean implements RouteService {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
-//    @Inject
+    //    @Inject
 //    private UserTransaction transaction;
-
+    @RolesAllowed({"admin"})
     @Override
 //    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean registerRoute(Destination destination, String name, String startingPoint, String destinationPoint) {
@@ -31,7 +32,7 @@ public class RouteServiceBean implements RouteService {
 //            transaction.begin();
 
             // Create a new Route
-            Route route = new Route(destination,startingPoint, destinationPoint, name);
+            Route route = new Route(destination, startingPoint, destinationPoint, name);
 
             // Persist the Route
             em.persist(route);

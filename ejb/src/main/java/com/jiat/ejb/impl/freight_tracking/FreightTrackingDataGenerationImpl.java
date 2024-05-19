@@ -4,6 +4,7 @@ import com.jiat.core.models.FreightTrackingDataModel;
 import com.jiat.ejb.entity.Freight;
 import com.jiat.ejb.entity.FreightTracking;
 import com.jiat.ejb.remote.FreightTrackingDataGeneration;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -23,6 +24,7 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
+    @RolesAllowed({"admin"})
     @Override
     public FreightTrackingDataModel getFreightTracking(Freight freight) {
 

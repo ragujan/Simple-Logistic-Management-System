@@ -3,6 +3,7 @@ package com.jiat.ejb.impl.merchant;
 import com.jiat.ejb.entity.Merchant;
 import com.jiat.ejb.entity.Product;
 import com.jiat.ejb.remote.ProductService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -20,7 +21,7 @@ public class ProductServiceBean implements ProductService {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
-//    @Inject
+    //    @Inject
 //    private UserTransaction transaction;
 //
 //    @Override
@@ -51,7 +52,7 @@ public class ProductServiceBean implements ProductService {
 //
 //        return true;
 //    }
-
+    @RolesAllowed({"merchant"})
     @Override
     public boolean registerProduct(String title, Float weight, String units, String merchantName) {
 
@@ -86,9 +87,10 @@ public class ProductServiceBean implements ProductService {
         query.setParameter("merchantName", merchantName);
         return query.getResultList();
     }
+
     @Override
     public Product getProductsByProductName(String productName) {
-        System.out.println("product name is "+productName);
+        System.out.println("product name is " + productName);
         TypedQuery<Product> query = em.createQuery(
                 "SELECT p FROM Product p WHERE p.title = :productName",
                 Product.class);

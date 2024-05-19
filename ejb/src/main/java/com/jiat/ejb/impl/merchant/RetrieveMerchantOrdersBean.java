@@ -4,6 +4,7 @@ import com.jiat.ejb.entity.Merchant;
 import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.interceptor.MerchantInterceptor;
 import com.jiat.ejb.remote.RetrieveMerchantOrders;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -21,7 +22,7 @@ public class RetrieveMerchantOrdersBean implements RetrieveMerchantOrders {
 
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
-
+    @RolesAllowed({"merchant"})
     @Override
     public List<Orders> getOrders(String merchantName) {
         try {

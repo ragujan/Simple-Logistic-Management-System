@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.IOException;
 
-@WebServlet("/login")
+@WebServlet("/login2")
 public class LoginServlet extends HttpServlet {
 
     @EJB(lookup = "java:global/ear-1.0/com.jiat-ejb-1.0/LoginImpl")

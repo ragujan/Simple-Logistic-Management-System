@@ -1,4 +1,4 @@
-package com.jiat.web.servlet.merchant;
+package com.jiat.web.servlet.merchant.auth;
 
 import com.jiat.ejb.remote.MerchantService;
 import jakarta.ejb.EJB;
@@ -34,9 +34,8 @@ public class LoginMerchantServlet extends HttpServlet {
             System.out.println("Name: " + name);
             System.out.println("Password: " + password);
             boolean login = merchantService.login(name,password);
-//            boolean reg = merchantService.register(name, email, password);
             if(login){
-//                request.login("merchant","merchant");
+                request.login("merchant","merchant");
                 HttpSession session = request.getSession();
                 session.setAttribute("login", true);
                 session.setAttribute("name",name);

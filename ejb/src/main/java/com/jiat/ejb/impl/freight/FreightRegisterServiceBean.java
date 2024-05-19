@@ -5,6 +5,7 @@ import com.jiat.ejb.entity.Freight;
 import com.jiat.ejb.entity.Route;
 import com.jiat.ejb.entity.Transportation;
 import com.jiat.ejb.remote.FreightRegisterService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -26,6 +27,7 @@ public class FreightRegisterServiceBean implements FreightRegisterService {
     @Inject
     private UserTransaction transaction;
 
+    @RolesAllowed({"admin"})
     @Override
     public boolean addFreight(FreightDataModel model) {
 
@@ -72,19 +74,20 @@ public class FreightRegisterServiceBean implements FreightRegisterService {
         }
 
     }
-
+    @RolesAllowed({"admin"})
     @Override
     public List<Freight> getAllFreights() {
         return em.createQuery("SELECT tt FROM Freight tt", Freight.class)
                 .getResultList();
     }
-
+    @RolesAllowed("admin")
     @Override
     public List<Route> getAllRoutes() {
         return em.createQuery("SELECT tt FROM Route tt", Route.class)
                 .getResultList();
     }
 
+    @RolesAllowed({"admin"})
     @Override
     public List<Transportation> getAllTransportations() {
         return em.createQuery("SELECT tt FROM Transportation tt", Transportation.class)

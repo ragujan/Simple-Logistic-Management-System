@@ -7,6 +7,7 @@ import com.jiat.ejb.entity.Transportation;
 import com.jiat.ejb.exception.SameStatusFoundException;
 import com.jiat.ejb.remote.FreightRegisterService;
 import com.jiat.ejb.remote.FreightStatusUpdateService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -29,7 +30,7 @@ public class FreightStatusUpdateServiceBean implements FreightStatusUpdateServic
     @Inject
     private UserTransaction transaction;
 
-
+    @RolesAllowed({"admin"})
     @Override
     public boolean updatedFreightJourneyStatus(String freightId, Boolean statusToBeUpdated) {
 

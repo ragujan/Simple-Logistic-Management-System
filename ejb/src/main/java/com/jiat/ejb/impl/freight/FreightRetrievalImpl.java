@@ -3,6 +3,7 @@ package com.jiat.ejb.impl.freight;
 import com.jiat.ejb.entity.Freight;
 import com.jiat.ejb.exception.ResultNotFoundException;
 import com.jiat.ejb.remote.FreightRetrieval;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -19,6 +20,7 @@ public class FreightRetrievalImpl implements FreightRetrieval {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
+    @RolesAllowed({"admin","merchant"})
     @Override
     public Integer getFreightDestinationIdByFreightId(String id) {
         try {

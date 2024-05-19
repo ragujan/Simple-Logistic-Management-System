@@ -6,6 +6,7 @@ import com.jiat.ejb.entity.FreightTracking;
 import com.jiat.ejb.entity.Merchant;
 import com.jiat.ejb.exception.NoMerchantFoundForRouteException;
 import com.jiat.ejb.remote.FreightTrackingForMerchant;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -24,7 +25,7 @@ public class FreightTrackingForMerchantImpl implements FreightTrackingForMerchan
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
-
+    @RolesAllowed({"merchant"})
     @Override
     public List<FreightTrackingDataModel> getFreightTrackingByMerchantOrder(String merchantName) {
         List<Merchant> merchant = em.createQuery(

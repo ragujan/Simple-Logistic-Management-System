@@ -14,9 +14,9 @@ public class MerchantHomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("login") == null) {
-            request.getSession().setAttribute("name", "Test");
-        }
+//        if (request.getSession().getAttribute("login") == null) {
+//            request.getSession().setAttribute("name", "Test");
+//        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("/merchant/merchant-home.jsp");
         dispatcher.forward(request, response);
     }

@@ -5,6 +5,7 @@ import com.jiat.ejb.entity.Route;
 import com.jiat.ejb.remote.DestinationService;
 import com.jiat.ejb.remote.ProductService;
 import com.jiat.ejb.remote.RouteService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -21,6 +22,9 @@ public class DestinationServiceBean implements DestinationService {
     private EntityManager em;
     @EJB
     RouteService routeService;
+
+
+    @RolesAllowed({"admin"})
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean addDestination(String name) {

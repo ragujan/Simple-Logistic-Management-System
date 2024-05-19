@@ -4,6 +4,7 @@ import com.jiat.core.models.DestinationDataModel;
 import com.jiat.ejb.entity.Destination;
 import com.jiat.ejb.entity.Freight;
 import com.jiat.ejb.remote.RetrieveDestination;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.TransactionManagement;
 import jakarta.ejb.TransactionManagementType;
@@ -19,7 +20,7 @@ import java.util.List;
 public class RetrieveDestinationBean implements RetrieveDestination {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
-
+    @RolesAllowed({"merchant"})
     @Override
     public List<DestinationDataModel> retrieveDestinations() {
         System.out.println("runinng the retrieve detination method");

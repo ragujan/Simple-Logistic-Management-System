@@ -4,6 +4,7 @@ import com.jiat.ejb.entity.*;
 import com.jiat.ejb.exception.NoMatchingFreightForRouteException;
 import com.jiat.ejb.remote.OrderInsertionService;
 import com.jiat.ejb.remote.ProductService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -24,7 +25,7 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
 
     @EJB
     ProductService productService;
-
+    @RolesAllowed({"merchant"})
     @Override
     public boolean createOrder(String destinationId, String merchantName, String productName, String qty, String expectedDate) {
 
@@ -107,7 +108,7 @@ public class OrderInsertionServiceBean implements OrderInsertionService {
 
         return false;
     }
-
+    @RolesAllowed({"merchant"})
     private Destination getDestinationById(String id) {
         try {
             Destination destination = em.createQuery(
