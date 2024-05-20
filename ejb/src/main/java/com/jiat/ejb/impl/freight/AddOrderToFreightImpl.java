@@ -19,34 +19,36 @@ public class AddOrderToFreightImpl implements AddOrderToFreight {
 
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
+
     @RolesAllowed({"merchant"})
     @Override
     public boolean addOrderToAvailableFreight(Orders order) {
         try {
-            System.out.println("hey Hey add order to available freight");
+//
             LocalDateTime orderCreatedDate = order.getCreatedAt();
             LocalDateTime orderExpectedDate = order.getExpectedDate();
 //
             Destination orderDestination = order.getDestination();
+//          get Routes of the order destination
+//          one Destination many routes
             List<Route> routes = em.createQuery("SELECT r FROM Route  r where r.destinationId=:destinationId", Route.class).setParameter("destinationId", orderDestination).getResultList();
 
-            routes.forEach(e -> System.out.println("route names are " + e.getName()));
+//          process to identify the possible routes that could match the order's expectations
             List<Freight> possibleFreights = new ArrayList<>();
-
+//          Freight Search on route, freight start date, freight end date
             routes.forEach(route -> {
-                Freight freight = em.createQuery("SELECT fr FROM Freight fr where fr.route=:firstRoute AND fr.startDate > :orderCreatedDate AND fr.endDate <:orderExpectedDate", Freight.class)
+                Freight freight = em.createQuery("SELECT fr FROM Freight fr where fr.route=:firstRoute AND fr.startDate > :orderCreatedDate ", Freight.class)
                         .setParameter("firstRoute", route)
                         .setParameter("orderCreatedDate", orderCreatedDate)
-                        .setParameter("orderExpectedDate", orderExpectedDate)
                         .getSingleResult();
-//                Freight freight = em.createQuery("SELECT fr FROM Freight fr where fr.route=:firstRoute AND fr.startDate > :orderCreatedDate AND fr.endDate <:orderExpectedDate", Freight.class)
-//                        .setParameter("firstRoute", route).setParameter("orderCreatedDate", orderCreatedDate).setParameter("orderExpectedDate", orderExpectedDate).getSingleResult();
                 if (freight != null) {
+//                    add it to the freight list
                     possibleFreights.add(freight);
                 }
             });
 
             if (possibleFreights != null) {
+//                time to add the freight and the order to the Freight Has Orders table, since we know there are possible freights
                 possibleFreights.forEach(e -> {
                     System.out.println("Freight Ids are " + e.getId());
                     FreightHasOrders freightHasOrders = new FreightHasOrders();
