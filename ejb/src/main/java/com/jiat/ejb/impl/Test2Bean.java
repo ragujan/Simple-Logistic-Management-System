@@ -15,6 +15,7 @@ import jakarta.transaction.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+//for testing purposes
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class Test2Bean implements Test2 {

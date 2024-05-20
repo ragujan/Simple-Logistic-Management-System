@@ -11,6 +11,7 @@ import jakarta.interceptor.InvocationContext;
 @Test
 @Interceptor
 
+//for testing purposes
 
 public class TestInterceptor2 {
 
