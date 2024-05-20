@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class RetrieveDestinationBean implements RetrieveDestination {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
+
     @RolesAllowed({"merchant"})
     @Override
     public List<DestinationDataModel> retrieveDestinations() {
@@ -31,19 +33,23 @@ public class RetrieveDestinationBean implements RetrieveDestination {
 //                .setParameter("hasStarted", false)
 //                .setParameter("routeOrder", 1)
 //                .getResultList();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = LocalDateTime.now().format(formatter);
+        LocalDateTime currentTime = LocalDateTime.parse(formattedDateTime, formatter);
         List<Freight> freights = em.createQuery("SELECT ff FROM Freight ff " +
                         "INNER JOIN ff.route r " +
                         "INNER JOIN r.destinationId f " +
-                        "WHERE ff.hasStarted=:hasStarted AND r.routeOrder=:routeOrder", Freight.class)
+                        "WHERE ff.hasStarted=:hasStarted AND r.routeOrder=:routeOrder AND ff.startDate>:startingDate", Freight.class)
                 .setParameter("hasStarted", false)
+                .setParameter("startingDate", currentTime)
                 .setParameter("routeOrder", 1).getResultList();
         List<DestinationDataModel> dataModels = new ArrayList<>();
-        for (Freight freight: freights
-             ) {
+        for (Freight freight : freights
+        ) {
             String destinationName = freight.getRoute().getDestinationId().getDestinationName();
             LocalDateTime freightStartingDate = freight.getStartDate();
             String freightId = Integer.toString(freight.getId());
-            dataModels.add(new DestinationDataModel(destinationName,freightStartingDate,freightId));
+            dataModels.add(new DestinationDataModel(destinationName, freightStartingDate, freightId));
         }
 
         return dataModels;

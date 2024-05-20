@@ -53,7 +53,6 @@
         <th>Failed</th>
         <th>Delivered</th>
         <th>Journey Started</th>
-        <th>Start Journey</th>
     </tr>
     </thead>
     <tbody>
@@ -70,13 +69,6 @@
             <td>${freight.failed}</td>
             <td>${freight.delivered}</td>
             <td>${freight.hasJourneyStarted}</td>
-            <td>
-                <form action="update-freight-journey-status" method="post">
-                    <input type="text" hidden="hidden" name="has_journey_started" value=${freight.hasJourneyStarted}>
-                    <input type="text" hidden="hidden" name="freight_id" value=${freight.id}>
-                    <button type="submit">Mark Started</button>
-                </form>
-            </td>
         </tr>
     </c:forEach>
     </tbody>

@@ -46,8 +46,6 @@ public class AddOrderToFreightImpl implements AddOrderToFreight {
                 }
             });
 
-
-
             if (possibleFreights != null) {
                 possibleFreights.forEach(e -> {
                     System.out.println("Freight Ids are " + e.getId());
@@ -60,18 +58,9 @@ public class AddOrderToFreightImpl implements AddOrderToFreight {
 
 
             }
-
-
-//          freight end date
-//          shouldn't be higher than order expected date
-//          freight end date 05/05/2024 > order expected date 01/05/2024 => not valid
-//          freight end date 05/05/2024 < order expected date 08/05/2024 => valid
-
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
 
         return false;
     }

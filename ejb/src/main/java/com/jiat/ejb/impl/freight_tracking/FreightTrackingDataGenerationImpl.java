@@ -2,7 +2,9 @@ package com.jiat.ejb.impl.freight_tracking;
 
 import com.jiat.core.models.FreightTrackingDataModel;
 import com.jiat.ejb.entity.Freight;
+import com.jiat.ejb.entity.FreightHasOrders;
 import com.jiat.ejb.entity.FreightTracking;
+import com.jiat.ejb.entity.Orders;
 import com.jiat.ejb.remote.FreightTrackingDataGeneration;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateful;
@@ -33,12 +35,27 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
                             "SELECT f FROM FreightTracking f WHERE f.freight IS NOT NULL AND  f.freight=:freight"
                             , FreightTracking.class)
                     .setParameter("freight", freight).getResultList();
-            if(freightTrackingList.size()==1){
+            if (freightTrackingList.size() == 1) {
                 FreightTracking freightTracking = freightTrackingList.get(0);
                 freightTracking.setCoordinates(Integer.toString(new Random().nextInt(500)));
                 String progress = freightTracking.getRouteProgress();
                 if (progress.equals("0%")) {
+//                    set route progress to 20%
                     freightTracking.setRouteProgress("20%");
+                    Integer freightId = freightTracking.getFreight().getId();
+                    List<FreightHasOrders> freightOrders = em.createQuery("SELECT " +
+                                    "fHO FROM FreightHasOrders fHO WHERE fHO.freight.id=:id", FreightHasOrders.class)
+                            .setParameter("id", freightId).getResultList();
+
+                    for (FreightHasOrders freightHasOrders : freightOrders
+                    ) {
+//                        mark orders as started
+                        Orders order = freightHasOrders.getOrders();
+                        order.setOrderStatus("started");
+                        em.merge(order);
+
+                    }
+
                 }
                 if (progress.equals("20%")) {
                     freightTracking.setRouteProgress("40%");
@@ -56,6 +73,7 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
                     freightTracking.setRouteProgress("100%");
                     freightTracking.getFreight().setDelivered(true);
                 }
+//                set freight status as started
                 freightTracking.getFreight().setHasStarted(true);
 
                 em.merge(freightTracking);
@@ -71,10 +89,10 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
                 model.setFreightRoute(freight.getRoute().getName());
 
                 return model;
-            }else{
+            } else {
                 return null;
             }
-        }catch (NoResultException ex){
+        } catch (NoResultException ex) {
             ex.printStackTrace();
         }
         return null;

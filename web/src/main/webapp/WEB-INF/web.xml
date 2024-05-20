@@ -3,7 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
+    <servlet>
+        <servlet-name>RedirectServlet</servlet-name>
+        <servlet-class>com.jiat.web.servlet.LoginServlet</servlet-class> <!-- Replace com.example.RedirectServlet with your actual servlet class -->
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RedirectServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
     <!--    <security-constraint>-->
     <!--        <web-resource-collection>-->
     <!--            <web-resource-name>Basic</web-resource-name>-->
@@ -61,14 +68,14 @@
             <form-error-page>/error.jsp</form-error-page>
         </form-login-config>
     </login-config>
-<!--    <login-config>-->
-<!--        <auth-method>FORM</auth-method>-->
-<!--        <realm-name>merchant-realm</realm-name>-->
-<!--        <form-login-config>-->
-<!--            <form-login-page>/merchant/merchant-login.jsp</form-login-page>-->
-<!--            <form-error-page>/error.jsp</form-error-page>-->
-<!--        </form-login-config>-->
-<!--    </login-config>-->
+    <!--    <login-config>-->
+    <!--        <auth-method>FORM</auth-method>-->
+    <!--        <realm-name>merchant-realm</realm-name>-->
+    <!--        <form-login-config>-->
+    <!--            <form-login-page>/merchant/merchant-login.jsp</form-login-page>-->
+    <!--            <form-error-page>/error.jsp</form-error-page>-->
+    <!--        </form-login-config>-->
+    <!--    </login-config>-->
     <error-page>
         <error-code>403</error-code>
         <location>/403.jsp</location>
