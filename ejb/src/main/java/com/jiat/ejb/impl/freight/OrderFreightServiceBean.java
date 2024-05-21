@@ -6,6 +6,7 @@ import com.jiat.ejb.remote.OrderFreightService;
 
 import java.time.LocalDateTime;
 
+//not used
 public class OrderFreightServiceBean implements OrderFreightService {
     @Override
     public boolean addOrderToFreight(Orders orders) {

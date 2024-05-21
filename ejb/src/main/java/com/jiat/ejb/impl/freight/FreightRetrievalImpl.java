@@ -20,10 +20,11 @@ public class FreightRetrievalImpl implements FreightRetrieval {
     @PersistenceContext(unitName = "WebPU")
     private EntityManager em;
 
-    @RolesAllowed({"admin","merchant"})
+    @RolesAllowed({"admin", "merchant"})
     @Override
     public Integer getFreightDestinationIdByFreightId(String id) {
         try {
+//          find the freight by freight id
             Freight freight = em.createQuery("SELECT f FROM Freight f WHERE f.id=:id", Freight.class)
                     .setParameter("id", Integer.parseInt(id)).getSingleResult();
             return freight.getRoute().getDestinationId().getId();
@@ -38,7 +39,7 @@ public class FreightRetrievalImpl implements FreightRetrieval {
         try {
 
             return em.createQuery("SELECT f FROM Freight f ", Freight.class).getResultList();
-        }catch (NotFoundException ex){
+        } catch (NotFoundException ex) {
             throw new ResultNotFoundException(ex.getMessage());
         }
     }

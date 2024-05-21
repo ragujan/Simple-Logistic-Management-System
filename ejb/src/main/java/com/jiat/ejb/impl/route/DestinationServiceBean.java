@@ -30,23 +30,26 @@ public class DestinationServiceBean implements DestinationService {
     public boolean addDestination(String name) {
         try {
 
+//            Persist the destination
             Destination destination = new Destination();
             destination.setDestinationName(name);
             em.persist(destination);
 
             String[] routeNames = name.split("-");
 
-            IntStream.range(0, routeNames.length-1)
-                    .forEach(i->{
+//            then break the destination into routes, persist them one by one into the
+//            route table
+            IntStream.range(0, routeNames.length - 1)
+                    .forEach(i -> {
                         String startingPoint = routeNames[i];
                         String destinationPoint = routeNames[i + 1];
-                        String routeName = startingPoint+"-"+destinationPoint;
+                        String routeName = startingPoint + "-" + destinationPoint;
 
                         Route route = new Route();
                         route.setStartingPoint(startingPoint);
                         route.setDestinationPoint(destinationPoint);
                         route.setName(routeName);
-                        route.setRouteOrder(i+1);
+                        route.setRouteOrder(i + 1);
                         route.setDestinationId(destination);
                         em.persist(route);
                     });
@@ -57,7 +60,6 @@ public class DestinationServiceBean implements DestinationService {
         }
         return false;
     }
-
 
 
 }

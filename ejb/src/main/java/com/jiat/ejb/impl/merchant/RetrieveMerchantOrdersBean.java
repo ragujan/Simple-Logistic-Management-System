@@ -24,6 +24,7 @@ public class RetrieveMerchantOrdersBean implements RetrieveMerchantOrders {
     private EntityManager em;
     @RolesAllowed({"merchant"})
     @Override
+//    get the order of the merchant
     public List<Orders> getOrders(String merchantName) {
         try {
             Merchant merchant =  em.createQuery(

@@ -25,14 +25,7 @@ public class RetrieveDestinationBean implements RetrieveDestination {
     @RolesAllowed({"merchant"})
     @Override
     public List<DestinationDataModel> retrieveDestinations() {
-        System.out.println("runinng the retrieve detination method");
-//         List<Destination> destinations = em.createQuery("SELECT dd FROM Destination  dd " +
-//                        "          INNER JOIN  dd.routeSet r " +
-//                        "          INNER JOIN Freight ff ON ff.route= r " +
-//                        "          WHERE ff.hasStarted=:hasStarted AND r.routeOrder=:routeOrder", Destination.class)
-//                .setParameter("hasStarted", false)
-//                .setParameter("routeOrder", 1)
-//                .getResultList();
+//This process is to retrieve destinations that the destination's all routes are clear and available
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = LocalDateTime.now().format(formatter);
         LocalDateTime currentTime = LocalDateTime.parse(formattedDateTime, formatter);

@@ -36,24 +36,25 @@ public class FreightRegisterServiceBean implements FreightRegisterService {
 
             Freight freight = new Freight();
 
-            TypedQuery<Transportation> transportation = em.createQuery(
-                    "SELECT p FROM Transportation p WHERE p.id = :id",
-                    Transportation.class);
-            transportation.setParameter("id", model.getTransportationId());
 
-            TypedQuery<Route> route = em.createQuery(
-                    "SELECT p FROM Route p WHERE p.id = :id",
-                    Route.class);
-            route.setParameter("id", model.getRouteId());
+            Transportation transportation = em.createQuery(
+                            "SELECT p FROM Transportation p WHERE p.id = :id",
+                            Transportation.class).
+                    setParameter("id", model.getTransportationId()).getSingleResult();
+
+            Route route = em.createQuery(
+                            "SELECT p FROM Route p WHERE p.id = :id",
+                            Route.class)
+                    .setParameter("id", model.getRouteId()).getSingleResult();
 
 
-            freight.setTransportation(transportation.getSingleResult());
+            freight.setTransportation(transportation);
             freight.setEta(model.getEta());
             freight.setDelivered(true);
             freight.setFailed(false);
             freight.setStartDate(model.getStartDate());
             freight.setEndDate(model.getEndDate());
-            freight.setRoute(route.getSingleResult());
+            freight.setRoute(route);
             freight.setWeight(Integer.parseInt(model.getWeight()));
             freight.setHasStarted(false);
             em.persist(freight);
@@ -74,12 +75,14 @@ public class FreightRegisterServiceBean implements FreightRegisterService {
         }
 
     }
+
     @RolesAllowed({"admin"})
     @Override
     public List<Freight> getAllFreights() {
         return em.createQuery("SELECT tt FROM Freight tt", Freight.class)
                 .getResultList();
     }
+
     @RolesAllowed("admin")
     @Override
     public List<Route> getAllRoutes() {

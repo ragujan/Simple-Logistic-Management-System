@@ -28,6 +28,7 @@ public class FreightTrackingForMerchantImpl implements FreightTrackingForMerchan
     @RolesAllowed({"merchant"})
     @Override
     public List<FreightTrackingDataModel> getFreightTrackingByMerchantOrder(String merchantName) {
+//        search merchant by the merchant name
         List<Merchant> merchant = em.createQuery(
                         "SELECT f FROM Merchant f WHERE  f.name=:merchantName"
                         , Merchant.class)
@@ -36,8 +37,8 @@ public class FreightTrackingForMerchantImpl implements FreightTrackingForMerchan
         if (merchant.size() != 1) {
             throw new NoMerchantFoundForRouteException("No Merchant found");
         } else {
+//            use merchant to get the orders that are in the freights, find them in freight tracking
             Merchant merchant1 = merchant.get(0);
-
             List<FreightTracking> freightTrackingList = em.createQuery(
                     "SELECT ft FROM FreightTracking ft " +
                             "JOIN ft.freight f " +
@@ -49,6 +50,7 @@ public class FreightTrackingForMerchantImpl implements FreightTrackingForMerchan
                     ,FreightTracking.class).setParameter("merchantName", merchantName).getResultList();
             for (FreightTracking freightTracking : freightTrackingList
             ) {
+//              add it to the freight tracking data model
                 FreightTrackingDataModel model = new FreightTrackingDataModel();
 
                 model.setCoordinates(freightTracking.getCoordinates());

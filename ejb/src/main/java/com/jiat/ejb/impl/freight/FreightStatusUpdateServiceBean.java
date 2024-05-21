@@ -41,10 +41,11 @@ public class FreightStatusUpdateServiceBean implements FreightStatusUpdateServic
             Freight freight = em.createQuery(
                             "SELECT p FROM Freight p WHERE p.id = :id",
                             Freight.class)
-                    .setParameter("id", Integer.parseInt(freightId)).getSingleResult();
+                    .setParameter("id", Integer.parseInt(freightId))
+                    .getSingleResult();
             if (freight.isHasStarted() != statusToBeUpdated) {
                 freight.setHasStarted(statusToBeUpdated);
-            }else{
+            } else {
                 throw new SameStatusFoundException("Same Status found");
             }
             em.merge(freight);

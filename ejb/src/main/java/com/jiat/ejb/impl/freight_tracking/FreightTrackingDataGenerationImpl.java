@@ -76,6 +76,7 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
 //                set freight status as started
                 freightTracking.getFreight().setHasStarted(true);
 
+//                update the freight tracking
                 em.merge(freightTracking);
 
                 FreightTrackingDataModel model = new FreightTrackingDataModel();
@@ -88,6 +89,7 @@ public class FreightTrackingDataGenerationImpl implements FreightTrackingDataGen
                 model.setRouteDestination(freight.getRoute().getDestinationId().getDestinationName());
                 model.setFreightRoute(freight.getRoute().getName());
 
+//              return the freight tracking model data that has been updated
                 return model;
             } else {
                 return null;
