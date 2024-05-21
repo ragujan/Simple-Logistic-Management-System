@@ -65,12 +65,13 @@ Resource Type - javax.sql.DataSource
 Datasource Classname - com.mysql.cj.jdbc.MysqlDataSource
 
 Add DB Connection values such as Password, root, host, db name.
+![alt text](https://github.com/ragujan/Simple-Logistic-Management-System/blob/main/src/main/resources/server_config_images/JDBC%20Connection%20Pool.JPG?raw=true)
 * Make JDBC Resource
 Add a Name, JNDI Name 	
 "jdbc/logistic_system" 
 
 Select the JDBC Connection Pool name which was created earlier.
-
+![alt text](https://github.com/ragujan/Simple-Logistic-Management-System/blob/main/src/main/resources/server_config_images/JDBC%20Resource.JPG?raw=true)
 * Security Configuration
 
 To configure, you have to go to the configurations -> default config -> security -> Realms -> file  
@@ -82,6 +83,8 @@ add admin type user
 * User ID as "admin", Group List: "admin".
 add merchant type user 
 * User ID as "merchant", Group List: "merchant"
+![alt text](https://github.com/ragujan/Simple-Logistic-Management-System/blob/main/src/main/resources/server_config_images/file_real_security.JPG?raw=true)
+
 
 
 
